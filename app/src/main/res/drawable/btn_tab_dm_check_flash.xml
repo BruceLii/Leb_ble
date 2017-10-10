@@ -1,0 +1,4 @@
+<layer-list   xmlns:android="http://schemas.android.com/apk/res/android">    
+    <item android:drawable="@drawable/tab_dim" />    
+    <item android:drawable="@drawable/shape_flash" />    
+</layer-list> 

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+     <declare-styleable name="Segment">
+        <attr name="bgseg1" format="integer" />
+        <attr name="bgseg2" format="integer" />
+        <attr name="bgseg3" format="integer" />
+        <attr name="normal_text_color" format="color" />
+        <attr name="check_text_color" format="color" />
+        <attr name="seg_text_size" format="dimension" />
+        <attr name="seg1_text" format="string" />
+        <attr name="seg2_text" format="string" />
+        <attr name="seg3_text" format="string" />
+    </declare-styleable>
+    
+    <declare-styleable name="VolumCircleBar">  
+        <attr name="recordingColor" format="color" />  
+        <attr name="stoppedColor" format="color" />  
+        <attr name="centerRes" format="color" />  
+        <attr name="blockCount" format="color" />  
+        <attr name="splitAngle" format="color" />  
+    </declare-styleable>  
+    
+     <declare-styleable name="slideswitch">
+        <attr name="themeColor" format="color" />
+        <attr name="isOpen" format="boolean" />
+        <attr name="shape">
+            <enum name="rect" value="1" />
+            <enum name="circle" value="2" />
+        </attr>
+    </declare-styleable>
+</resources>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="J:\sdk\extras\android\m2repository\com\android\support\support-annotations\22.2.1\support-annotations-22.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="61a0ff5c29295ec56d7e0bd3d25d95dbf71b4b2b">
+        <dex dex="C:\Users\li\Desktop\LED BLE\app\build\intermediates\pre-dexed\debug\support-annotations-22.2.1_54dfada3a27348097b7a37a20e9279fa46151a48.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\li\.android\build-cache\78ca3402613c4656c497cdbfae6afd192c5f3203\output\jars\libs\internal_impl-22.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="c471eaaba13ff64f6e0383d1c30a9cdc9a97efeb">
+        <dex dex="C:\Users\li\Desktop\LED BLE\app\build\intermediates\pre-dexed\debug\internal_impl-22.2.1_90f623c635a1a4f7a8d6308e67211508ce208f2d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\li\Desktop\LED BLE\app\libs\butterknife-7.0.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="d5d13ea991eab0252e3710e5df3d6a9d4b21d461">
+        <dex dex="C:\Users\li\Desktop\LED BLE\app\build\intermediates\pre-dexed\debug\butterknife-7.0.1_976051d6537d18211605120e08c99f3369ebfe09.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\li\.android\build-cache\ed53ec02d1598da58a8481c40489c6675753beb0\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="4486e953d1f35f8ccab098b1dd67146366d5f731">
+        <dex dex="C:\Users\li\Desktop\LED BLE\app\build\intermediates\pre-dexed\debug\classes_e576c7a69354b3b8c2d752c0b7dfdf7b657076f1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\li\.android\build-cache\78ca3402613c4656c497cdbfae6afd192c5f3203\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="f8efd0096475e0daf054267b61544e10dc776503">
+        <dex dex="C:\Users\li\Desktop\LED BLE\app\build\intermediates\pre-dexed\debug\classes_85ef606b49e660c306ec290d60b871e1a74e065d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\li\.android\build-cache\9aff471188e2a05a9253ba13c7f51b381f3c089f\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="1821601ddbec5ff125653097812823388700af74">
+        <dex dex="C:\Users\li\Desktop\LED BLE\app\build\intermediates\pre-dexed\debug\classes_28e62b3b2c76901ea045cfa69d747d4a06ecdbac.jar" />
+    </item>
+
+</items>

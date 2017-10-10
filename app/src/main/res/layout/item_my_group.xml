@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:slideswitch="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:divider="@android:color/transparent"
+    
+    android:background="@color/gray_button_bg"
+    android:orientation="vertical" >
+
+    <View
+        android:id="@+id/viewTopLine"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/black"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/group_height"
+        android:background="@color/transparent"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:background="@color/transparent"
+            android:gravity="center" >
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/bg_ble_group" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="@dimen/group_height"
+            android:layout_weight="3"
+            android:background="@color/transparent"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textViewGroupName"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="@dimen/margin_content_big"
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size3"
+                android:gravity="center_vertical|left"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/textViewTotal"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="@dimen/margin_content_big"
+                android:layout_weight="1"
+                android:gravity="center_vertical|left"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size3" />
+        </LinearLayout>
+        
+         <com.ledble.view.SlideSwitch 
+		        android:id="@+id/slideSwitch"
+		        android:layout_width="48dp"
+		        android:layout_height="28dp"
+		        android:layout_gravity="center_vertical"
+		        android:layout_marginEnd="6dp"
+		        slideswitch:shape="circle"
+		        android:visibility="gone"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:background="@color/transparent" 
+            android:visibility="gone">
+
+            <ToggleButton
+                android:id="@+id/toggleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/imageViewControll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_go_control"
+                android:visibility="invisible" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/viewBottomLine"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#cdccd1" />
+
+</LinearLayout>

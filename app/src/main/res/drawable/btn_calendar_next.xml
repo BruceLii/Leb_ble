@@ -1,0 +1,6 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/bg_calendar_next_p" android:state_pressed="true"/>
+    <item android:drawable="@drawable/bg_calendar_next" android:state_pressed="false"/>
+
+</selector>

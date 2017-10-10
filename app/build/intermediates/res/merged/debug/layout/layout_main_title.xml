@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:orientation="horizontal" >
+
+    <RelativeLayout
+        android:layout_width="64dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp" >
+
+        <ImageView
+            android:id="@+id/ivLeftMenu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_navigation" />
+        
+        <TextView
+            android:id="@+id/textViewConnectCount"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="35dp"
+            android:layout_width="25dp"
+            android:layout_height="30dp"
+            android:background="@color/transparent"
+            android:gravity="center"
+            android:textColor="@color/white"   
+            android:text="0"
+            android:textSize="@dimen/text_size2" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <com.common.view.SegmentedRadioGroup
+            android:id="@+id/segmentDm"
+            android:layout_marginTop="20dp"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="@dimen/margin_mid"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone" >
+
+            <RadioButton
+                android:id="@+id/rbDmOne"
+                android:button="@null"
+                android:gravity="center"
+                android:layout_height="fill_parent"
+                android:minWidth="40dip"
+                android:text="@string/ring"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <RadioButton
+                android:id="@+id/rbDmTwo"
+                android:button="@null"
+                android:gravity="center"
+                android:layout_height="fill_parent"
+                android:minWidth="40dip"
+                android:text="@string/model"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+        </com.common.view.SegmentedRadioGroup>
+
+        <com.common.view.SegmentedRadioGroup
+            android:id="@+id/segmentCt"
+            android:layout_marginTop="20dp"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="@dimen/margin_mid"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone" >
+
+            <RadioButton
+                android:id="@+id/rbCtOne"
+                android:button="@null"
+                android:gravity="center"
+                android:layout_height="fill_parent"
+                android:minWidth="40dip"
+                android:text="@string/ring"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <RadioButton
+                android:id="@+id/rbCtTwo"
+                android:button="@null"
+                android:gravity="center"
+                android:layout_height="fill_parent"
+                android:minWidth="40dip"
+                android:text="@string/model"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+        </com.common.view.SegmentedRadioGroup>
+
+        <com.common.view.SegmentedRadioGroup
+            android:id="@+id/segmentRgb"
+            android:layout_marginTop="20dp"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="@dimen/margin_mid"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone" >
+
+            <RadioButton
+                android:id="@+id/rbRgbOne"
+                
+                android:button="@null"
+                android:gravity="center"
+                android:layout_height="fill_parent"
+                android:minWidth="40dip"
+                android:text="@string/ring"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <RadioButton
+                android:id="@+id/rbRgbTwo"
+               
+                android:button="@null"
+                android:gravity="center"
+                android:layout_height="fill_parent"
+                android:minWidth="40dip"
+                android:text="@string/model"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <RadioButton
+                android:id="@+id/rbRgbThree"
+                
+                android:button="@null"
+                android:gravity="center"
+                android:layout_height="fill_parent"
+                android:minWidth="40dip"
+                android:text="@string/custom"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+        </com.common.view.SegmentedRadioGroup>
+
+        <com.common.view.SegmentedRadioGroup
+            android:id="@+id/segmentMusic"
+            android:layout_marginTop="20dp"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="@dimen/margin_mid"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone" >
+
+            <RadioButton
+                android:id="@+id/rbMusicOne"
+                android:button="@null"
+                android:gravity="center"
+                android:layout_height="fill_parent"
+                android:minWidth="48dip"
+                android:text="@string/tab_music"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <RadioButton
+                android:id="@+id/rbMusicTwo"
+                android:button="@null"
+                android:gravity="center"
+                android:layout_height="fill_parent"
+                android:minWidth="48dip"
+                android:text="@string/tab_record"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+        </com.common.view.SegmentedRadioGroup>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/ivRightMenu"
+        android:layout_marginTop="20dp"
+        android:layout_width="64dp"
+        android:layout_height="match_parent"
+        android:scaleType="centerInside"
+        android:src="@drawable/tab_setting" />
+
+</LinearLayout>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black" >
+
+    <RelativeLayout
+        android:id="@+id/relativeLayoutHeader"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/tab_height"
+        android:background="@drawable/tab_bg" >
+
+        <Button
+            android:id="@+id/buttonCancell"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/margin_mid"
+            android:background="@android:color/transparent"
+            android:text="@string/cancell_dialog"
+            android:textColor="@color/text_color_blue"
+            android:textSize="@dimen/text_size6" />
+
+        <Button
+            android:id="@+id/buttonSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_mid"
+            android:background="@android:color/transparent"
+            android:text="@string/save"
+            android:textColor="@color/text_color_blue"
+            android:textSize="@dimen/text_size6" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/tab_height" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/relativeLayoutHeader"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/tab_height" >
+
+                <com.common.view.TextViewBorder
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/hour"
+                    android:textColor="@color/text_color_blue"
+                    android:textSize="@dimen/text_size6" />
+
+                <com.common.view.TextViewBorder
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/minute"
+                    android:textColor="@color/text_color_blue"
+                    android:textSize="@dimen/text_size6" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" >
+
+                <com.ledble.view.wheel.WheelView
+                    android:id="@+id/listViewH"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <com.ledble.view.wheel.WheelView
+                    android:id="@+id/listViewM"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:id="@+id/linearLayoutContainer"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <com.common.view.TextViewBorder
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/tab_height"
+                android:gravity="center"
+                android:text="@string/model"
+                android:textColor="@color/text_color_blue"
+                android:textSize="@dimen/text_size6" />
+
+            <com.ledble.view.wheel.WheelView
+                android:id="@+id/listViewModel"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/tab_height" />
+    </LinearLayout>
+
+</RelativeLayout>

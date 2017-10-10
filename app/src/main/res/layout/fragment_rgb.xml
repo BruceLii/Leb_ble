@@ -1,0 +1,938 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <!-- 色环 -->
+
+    <RelativeLayout
+        android:id="@+id/relativeTab1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="@dimen/margin_content"
+        android:layout_marginRight="@dimen/margin_content"
+        android:orientation="vertical"
+        android:visibility="visible" >
+
+        <LinearLayout
+            android:id="@+id/linarLayoutColorCile"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp" >
+
+                <LinearLayout
+                    android:layout_width="64dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone" >
+
+                    <TextView
+                        android:id="@+id/textViewR"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#ffff0000"
+                        android:gravity="left|center_vertical"
+                        android:text="R:"
+                        android:textSize="@dimen/text_size2" />
+
+                    <TextView
+                        android:id="@+id/textViewG"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#ff00ff00"
+                        android:gravity="left|center_vertical"
+                        android:text="G:"
+                        android:textSize="@dimen/text_size2" />
+
+                    <TextView
+                        android:id="@+id/textViewB"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#ff0000ff"
+                        android:gravity="left|center_vertical"
+                        android:text="B:"
+                        android:textSize="@dimen/text_size2" />
+                </LinearLayout>
+
+                <ToggleButton
+                    android:id="@+id/toggleButton1"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/block_shap_color"
+                    android:checked="true"
+                    android:text="ToggleButton" />
+
+                <com.ledble.view.MyColorPickerImageView4RGB
+                    android:id="@+id/imageViewPicker"
+                    android:layout_width="250dp"
+                    android:layout_height="250dp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="10dp" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="20dp"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:visibility="visible" >
+
+                    <TextView
+                        android:id="@+id/tvBrightness" 
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:background="@color/transparent"
+                        android:text="@string/brightness" />
+                    
+				</LinearLayout>
+                
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" >
+
+                    <com.ledble.view.BlackWiteSelectView
+                        android:id="@+id/blackWiteSelectView"
+                        android:layout_width="290dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:layout_margin="@dimen/margin_content" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal" >
+
+                    <View
+                        android:id="@+id/viewColor1"
+                        android:layout_width="@dimen/color_block_size"
+                        android:layout_height="@dimen/color_block_size"
+                        android:layout_marginLeft="@dimen/margin_mid"
+                        android:layout_marginRight="@dimen/margin_mid"
+                        android:background="@drawable/color_block_shap_red"
+                        android:tag="viewColor1" />
+
+                    <View
+                        android:id="@+id/viewColor2"
+                        android:layout_width="@dimen/color_block_size"
+                        android:layout_height="@dimen/color_block_size"
+                        android:layout_marginLeft="@dimen/margin_mid"
+                        android:layout_marginRight="@dimen/margin_mid"
+                        android:background="@drawable/color_block_shap_yellow"
+                        android:tag="viewColor2" />
+
+                    <View
+                        android:id="@+id/viewColor3"
+                        android:layout_width="@dimen/color_block_size"
+                        android:layout_height="@dimen/color_block_size"
+                        android:layout_marginLeft="@dimen/margin_mid"
+                        android:layout_marginRight="@dimen/margin_mid"
+                        android:background="@drawable/color_block_shap_green"
+                        android:tag="viewColor3" />
+
+                    <View
+                        android:id="@+id/viewColor4"
+                        android:layout_width="@dimen/color_block_size"
+                        android:layout_height="@dimen/color_block_size"
+                        android:layout_marginLeft="@dimen/margin_mid"
+                        android:layout_marginRight="@dimen/margin_mid"
+                        android:background="@drawable/color_block_shap_crystal"
+                        android:tag="viewColor4" />
+
+                    <View
+                        android:id="@+id/viewColor5"
+                        android:layout_width="@dimen/color_block_size"
+                        android:layout_height="@dimen/color_block_size"
+                        android:layout_marginLeft="@dimen/margin_mid"
+                        android:layout_marginRight="@dimen/margin_mid"
+                        android:background="@drawable/color_block_shap_blue"
+                        android:tag="viewColor5" />
+
+                    <View
+                        android:id="@+id/viewColor6"
+                        android:layout_width="@dimen/color_block_size"
+                        android:layout_height="@dimen/color_block_size"
+                        android:layout_marginLeft="@dimen/margin_mid"
+                        android:layout_marginRight="@dimen/margin_mid"
+                        android:background="@drawable/color_block_shap_pink"
+                        android:tag="viewColor6" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal" >
+
+                    <com.ledble.view.ColorTextView
+                        android:layout_width="@dimen/rect_dimen"
+                        android:layout_height="@dimen/rect_dimen"
+                        android:layout_marginLeft="@dimen/margin_mid"
+                        android:layout_marginRight="@dimen/margin_mid"
+                        android:background="@drawable/block_shap_color"
+                        android:gravity="center"
+                        android:tag="diyColor1"
+                        android:text="+"
+                        android:textColor="#FFFFFF" />
+
+                    <com.ledble.view.ColorTextView
+                        android:layout_width="@dimen/rect_dimen"
+                        android:layout_height="@dimen/rect_dimen"
+                        android:layout_marginLeft="@dimen/margin_mid"
+                        android:layout_marginRight="@dimen/margin_mid"
+                        android:background="@drawable/block_shap_color"
+                        android:gravity="center"
+                        android:tag="diyColor2"
+                        android:text="+"
+                        android:textColor="#FFFFFF" />
+
+                    <com.ledble.view.ColorTextView
+                        android:layout_width="@dimen/rect_dimen"
+                        android:layout_height="@dimen/rect_dimen"
+                        android:layout_marginLeft="@dimen/margin_mid"
+                        android:layout_marginRight="@dimen/margin_mid"
+                        android:background="@drawable/block_shap_color"
+                        android:gravity="center"
+                        android:tag="diyColor3"
+                        android:text="+"
+                        android:textColor="#FFFFFF" />
+
+                    <com.ledble.view.ColorTextView
+                        android:layout_width="@dimen/rect_dimen"
+                        android:layout_height="@dimen/rect_dimen"
+                        android:layout_marginLeft="@dimen/margin_mid"
+                        android:layout_marginRight="@dimen/margin_mid"
+                        android:background="@drawable/block_shap_color"
+                        android:gravity="center"
+                        android:tag="diyColor4"
+                        android:text="+"
+                        android:textColor="#FFFFFF" />
+
+                    <com.ledble.view.ColorTextView
+                        android:layout_width="@dimen/rect_dimen"
+                        android:layout_height="@dimen/rect_dimen"
+                        android:layout_marginLeft="@dimen/margin_mid"
+                        android:layout_marginRight="@dimen/margin_mid"
+                        android:background="@drawable/block_shap_color"
+                        android:gravity="center"
+                        android:tag="diyColor5"
+                        android:text="+"
+                        android:textColor="#FFFFFF" />
+
+                    <com.ledble.view.ColorTextView
+                        android:layout_width="@dimen/rect_dimen"
+                        android:layout_height="@dimen/rect_dimen"
+                        android:layout_marginLeft="@dimen/margin_mid"
+                        android:layout_marginRight="@dimen/margin_mid"
+                        android:background="@drawable/block_shap_color"
+                        android:gravity="center"
+                        android:tag="diyColor6"
+                        android:text="+"
+                        android:textColor="#FFFFFF" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <!-- 模式 -->
+
+    <RelativeLayout
+        android:id="@+id/relativeTab2"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="@dimen/margin_content"
+        android:layout_marginRight="@dimen/margin_content"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <LinearLayout
+            android:id="@+id/linarLayoutColorMode"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="5" >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:visibility="visible" >
+
+                    <TextView
+                        android:id="@+id/textViewCurretModel"
+                        
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:background="@color/transparent"
+                        android:text="@string/current_mode" />
+                    
+				</LinearLayout>
+                <!-- 
+                <Button
+                    android:id="@+id/imageViewPlay"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="3dp"
+                    android:background="@drawable/bg_play_pause" />
+
+                <Button
+                    android:id="@+id/imageViewLightTrunOff"
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/light_turn_off" />
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="@dimen/margin_content"
+                    android:layout_marginRight="@dimen/margin_content"
+                    android:orientation="vertical"
+                    android:visibility="visible" >
+                </RelativeLayout>
+                 -->
+
+                <ListView
+                    android:id="@+id/listViewModel"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:choiceMode="singleChoice"
+                    android:paddingTop="50dp" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="50dp"
+                android:layout_weight="2"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1.5"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <SeekBar
+                        android:id="@+id/seekBarSpeed"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:max="100"
+                        android:progress="1"
+                        android:thumb="@drawable/slider_thumb" />
+
+                    <TextView
+                        android:id="@+id/textViewSpeed"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/speed"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size3" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1.5"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <SeekBar
+                        android:id="@+id/seekBarBrightNess"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:max="100"
+                        android:progress="1"
+                        android:thumb="@drawable/slider_thumb" />
+
+                    <TextView
+                        android:id="@+id/textViewBrightNess"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:text="@string/brightness"
+                        android:textSize="@dimen/text_size3" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal" >
+                </LinearLayout>
+
+                
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <!-- 自定义-->
+
+    <LinearLayout
+        android:id="@+id/relativeTab3"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="@dimen/margin_content"
+        android:layout_marginRight="@dimen/margin_content"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/single_click_select_color"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size2" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutViewBlocks"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <com.ledble.view.ColorTextView
+                    android:layout_width="@dimen/rect_dimen"
+                    android:layout_height="@dimen/rect_dimen"
+                    android:layout_marginLeft="@dimen/margin_mid"
+                    android:layout_marginRight="@dimen/margin_mid"
+                    android:background="@drawable/block_shap_color"
+                    android:gravity="center"
+                    android:tag="labelColor1"
+                    android:text="+"
+                    android:textColor="#FFFFFF" />
+
+                <com.ledble.view.ColorTextView
+                    android:layout_width="@dimen/rect_dimen"
+                    android:layout_height="@dimen/rect_dimen"
+                    android:layout_marginLeft="@dimen/margin_mid"
+                    android:layout_marginRight="@dimen/margin_mid"
+                    android:background="@drawable/block_shap_color"
+                    android:gravity="center"
+                    android:tag="labelColor2"
+                    android:text="+"
+                    android:textColor="#FFFFFF" />
+
+                <com.ledble.view.ColorTextView
+                    android:layout_width="@dimen/rect_dimen"
+                    android:layout_height="@dimen/rect_dimen"
+                    android:layout_marginLeft="@dimen/margin_mid"
+                    android:layout_marginRight="@dimen/margin_mid"
+                    android:background="@drawable/block_shap_color"
+                    android:gravity="center"
+                    android:tag="labelColor3"
+                    android:text="+"
+                    android:textColor="#FFFFFF" />
+
+                <com.ledble.view.ColorTextView
+                    android:layout_width="@dimen/rect_dimen"
+                    android:layout_height="@dimen/rect_dimen"
+                    android:layout_marginLeft="@dimen/margin_mid"
+                    android:layout_marginRight="@dimen/margin_mid"
+                    android:background="@drawable/block_shap_color"
+                    android:gravity="center"
+                    android:tag="labelColor4"
+                    android:text="+"
+                    android:textColor="#FFFFFF" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <com.ledble.view.ColorTextView
+                    android:layout_width="@dimen/rect_dimen"
+                    android:layout_height="@dimen/rect_dimen"
+                    android:layout_marginLeft="@dimen/margin_mid"
+                    android:layout_marginRight="@dimen/margin_mid"
+                    android:background="@drawable/block_shap_color"
+                    android:gravity="center"
+                    android:tag="labelColor5"
+                    android:text="+"
+                    android:textColor="#FFFFFF" />
+
+                <com.ledble.view.ColorTextView
+                    android:layout_width="@dimen/rect_dimen"
+                    android:layout_height="@dimen/rect_dimen"
+                    android:layout_marginLeft="@dimen/margin_mid"
+                    android:layout_marginRight="@dimen/margin_mid"
+                    android:background="@drawable/block_shap_color"
+                    android:gravity="center"
+                    android:tag="labelColor6"
+                    android:text="+"
+                    android:textColor="#FFFFFF" />
+
+                <com.ledble.view.ColorTextView
+                    android:layout_width="@dimen/rect_dimen"
+                    android:layout_height="@dimen/rect_dimen"
+                    android:layout_marginLeft="@dimen/margin_mid"
+                    android:layout_marginRight="@dimen/margin_mid"
+                    android:background="@drawable/block_shap_color"
+                    android:gravity="center"
+                    android:tag="labelColor7"
+                    android:text="+"
+                    android:textColor="#FFFFFF" />
+
+                <com.ledble.view.ColorTextView
+                    android:layout_width="@dimen/rect_dimen"
+                    android:layout_height="@dimen/rect_dimen"
+                    android:layout_marginLeft="@dimen/margin_mid"
+                    android:layout_marginRight="@dimen/margin_mid"
+                    android:background="@drawable/block_shap_color"
+                    android:gravity="center"
+                    android:tag="labelColor8"
+                    android:text="+"
+                    android:textColor="#FFFFFF" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <com.ledble.view.ColorTextView
+                    android:layout_width="@dimen/rect_dimen"
+                    android:layout_height="@dimen/rect_dimen"
+                    android:layout_marginLeft="@dimen/margin_mid"
+                    android:layout_marginRight="@dimen/margin_mid"
+                    android:background="@drawable/block_shap_color"
+                    android:gravity="center"
+                    android:tag="labelColor9"
+                    android:text="+"
+                    android:textColor="#FFFFFF" />
+
+                <com.ledble.view.ColorTextView
+                    android:layout_width="@dimen/rect_dimen"
+                    android:layout_height="@dimen/rect_dimen"
+                    android:layout_marginLeft="@dimen/margin_mid"
+                    android:layout_marginRight="@dimen/margin_mid"
+                    android:background="@drawable/block_shap_color"
+                    android:gravity="center"
+                    android:tag="labelColor10"
+                    android:text="+"
+                    android:textColor="#FFFFFF" />
+
+                <com.ledble.view.ColorTextView
+                    android:layout_width="@dimen/rect_dimen"
+                    android:layout_height="@dimen/rect_dimen"
+                    android:layout_marginLeft="@dimen/margin_mid"
+                    android:layout_marginRight="@dimen/margin_mid"
+                    android:background="@drawable/block_shap_color"
+                    android:gravity="center"
+                    android:tag="labelColor11"
+                    android:text="+"
+                    android:textColor="#FFFFFF" />
+
+                <com.ledble.view.ColorTextView
+                    android:layout_width="@dimen/rect_dimen"
+                    android:layout_height="@dimen/rect_dimen"
+                    android:layout_marginLeft="@dimen/margin_mid"
+                    android:layout_marginRight="@dimen/margin_mid"
+                    android:background="@drawable/block_shap_color"
+                    android:gravity="center"
+                    android:tag="labelColor12"
+                    android:text="+"
+                    android:textColor="#FFFFFF" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <com.ledble.view.ColorTextView
+                    android:layout_width="@dimen/rect_dimen"
+                    android:layout_height="@dimen/rect_dimen"
+                    android:layout_marginLeft="@dimen/margin_mid"
+                    android:layout_marginRight="@dimen/margin_mid"
+                    android:background="@drawable/block_shap_color"
+                    android:gravity="center"
+                    android:tag="labelColor13"
+                    android:text="+"
+                    android:textColor="#FFFFFF" />
+
+                <com.ledble.view.ColorTextView
+                    android:layout_width="@dimen/rect_dimen"
+                    android:layout_height="@dimen/rect_dimen"
+                    android:layout_marginLeft="@dimen/margin_mid"
+                    android:layout_marginRight="@dimen/margin_mid"
+                    android:background="@drawable/block_shap_color"
+                    android:gravity="center"
+                    android:tag="labelColor14"
+                    android:text="+"
+                    android:textColor="#FFFFFF" />
+
+                <com.ledble.view.ColorTextView
+                    android:layout_width="@dimen/rect_dimen"
+                    android:layout_height="@dimen/rect_dimen"
+                    android:layout_marginLeft="@dimen/margin_mid"
+                    android:layout_marginRight="@dimen/margin_mid"
+                    android:background="@drawable/block_shap_color"
+                    android:gravity="center"
+                    android:tag="labelColor15"
+                    android:text="+"
+                    android:textColor="#FFFFFF" />
+
+                <com.ledble.view.ColorTextView
+                    android:layout_width="@dimen/rect_dimen"
+                    android:layout_height="@dimen/rect_dimen"
+                    android:layout_marginLeft="@dimen/margin_mid"
+                    android:layout_marginRight="@dimen/margin_mid"
+                    android:background="@drawable/block_shap_color"
+                    android:gravity="center"
+                    android:tag="labelColor16"
+                    android:text="+"
+                    android:textColor="#FFFFFF" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center" >
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="50dip"
+                    android:layout_weight="5"
+                    android:gravity="center" >
+
+                    <com.common.view.SegmentedRadioGroup
+                        android:id="@+id/changeButton"
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/margin_mid"
+                        android:checkedButton="@+id/button_one"
+                        android:gravity="top|center"
+                        android:orientation="horizontal" >
+
+                        <RadioButton
+                            android:id="@+id/changeButtonOne"
+                            android:layout_height="match_parent"
+                            android:button="@null"
+                            android:gravity="center"
+                            android:minWidth="40dip"
+                            android:text="@string/jump"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                        <RadioButton
+                            android:id="@+id/changeButtonTwo"
+                            android:layout_height="match_parent"
+                            android:button="@null"
+                            android:gravity="center"
+                            android:minWidth="40dip"
+                            android:text="@string/breathe"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                        <RadioButton
+                            android:id="@+id/changeButtonThree"
+                            android:layout_height="match_parent"
+                            android:button="@null"
+                            android:gravity="center"
+                            android:minWidth="40dip"
+                            android:text="@string/flash"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                        <RadioButton
+                            android:id="@+id/changeButtonFour"
+                            android:layout_height="match_parent"
+                            android:button="@null"
+                            android:gravity="center"
+                            android:minWidth="40dip"
+                            android:text="@string/gradient"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+                    </com.common.view.SegmentedRadioGroup>
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="50dip"
+                    android:layout_weight="1"
+                    android:gravity="center" >
+
+                    <Button
+                        android:id="@+id/button1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/run" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <SeekBar
+                    android:id="@+id/seekBarBrightNess2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:max="100"
+                    android:progress="50"
+                    android:thumb="@drawable/slider_thumb" />
+
+                <TextView
+                    android:id="@+id/textViewBrightNess2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:text="@string/speed"
+                    android:textSize="@dimen/text_size3" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical" >
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    
+    <!-- 
+    <LinearLayout
+        android:id="@+id/relativeTabColorCover"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/bg_all"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        
+        <com.common.view.SegmentedRadioGroup
+            android:id="@+id/srgCover"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_mid"
+            android:checkedButton="@+id/button_one"
+            android:gravity="top|center"
+            android:orientation="horizontal"
+            android:visibility="gone" >
+
+            <RadioButton
+                android:id="@+id/rbRing"
+                android:button="@null"
+                android:gravity="center"
+                android:minHeight="33dip"
+                android:minWidth="40dip"
+                android:text="@string/ring"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <RadioButton
+                android:id="@+id/rbModle"
+                android:button="@null"
+                android:gravity="center"
+                android:minHeight="33dip"
+                android:minWidth="40dip"
+                android:text="@string/model"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+        </com.common.view.SegmentedRadioGroup>
+
+        <LinearLayout
+            android:id="@+id/llRing"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="6"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_margin="4dp"
+                android:layout_weight="4" >
+
+                <com.ledble.view.MyColorPickerImageView4RGB
+                    android:id="@+id/imageViewPicker2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_centerInParent="true" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" >
+
+                    <com.ledble.view.BlackWiteSelectView
+                        android:id="@+id/blackWiteSelectView2"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_margin="@dimen/margin_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/viewColors"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal" >
+
+                    <View
+                        android:id="@+id/viewColor11"
+                        android:layout_width="@dimen/color_block_size"
+                        android:layout_height="@dimen/color_block_size"
+                        android:layout_marginLeft="@dimen/margin_mid"
+                        android:layout_marginRight="@dimen/margin_mid"
+                        android:background="@drawable/color_block_shap_red"
+                        android:tag="viewColor1" />
+
+                    <View
+                        android:id="@+id/viewColor12"
+                        android:layout_width="@dimen/color_block_size"
+                        android:layout_height="@dimen/color_block_size"
+                        android:layout_marginLeft="@dimen/margin_mid"
+                        android:layout_marginRight="@dimen/margin_mid"
+                        android:background="@drawable/color_block_shap_yellow"
+                        android:tag="viewColor2" />
+
+                    <View
+                        android:id="@+id/viewColor13"
+                        android:layout_width="@dimen/color_block_size"
+                        android:layout_height="@dimen/color_block_size"
+                        android:layout_marginLeft="@dimen/margin_mid"
+                        android:layout_marginRight="@dimen/margin_mid"
+                        android:background="@drawable/color_block_shap_green"
+                        android:tag="viewColor3" />
+
+                    <View
+                        android:id="@+id/viewColor14"
+                        android:layout_width="@dimen/color_block_size"
+                        android:layout_height="@dimen/color_block_size"
+                        android:layout_marginLeft="@dimen/margin_mid"
+                        android:layout_marginRight="@dimen/margin_mid"
+                        android:background="@drawable/color_block_shap_crystal"
+                        android:tag="viewColor4" />
+
+                    <View
+                        android:id="@+id/viewColor15"
+                        android:layout_width="@dimen/color_block_size"
+                        android:layout_height="@dimen/color_block_size"
+                        android:layout_marginLeft="@dimen/margin_mid"
+                        android:layout_marginRight="@dimen/margin_mid"
+                        android:background="@drawable/color_block_shap_blue"
+                        android:tag="viewColor5" />
+
+                    <View
+                        android:id="@+id/viewColor16"
+                        android:layout_width="@dimen/color_block_size"
+                        android:layout_height="@dimen/color_block_size"
+                        android:layout_marginLeft="@dimen/margin_mid"
+                        android:layout_marginRight="@dimen/margin_mid"
+                        android:background="@drawable/color_block_shap_pink"
+                        android:tag="viewColor6" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llCover"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="6"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <TextView
+                android:id="@+id/tvCoverModel"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="@string/current_mode"
+                android:textColor="@color/white" />
+
+            <ListView
+                android:id="@+id/lvCover"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:choiceMode="singleChoice" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:gravity="center" >
+
+            <Button
+                android:id="@+id/buttonConfirm"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_content"
+                android:layout_marginRight="@dimen/margin_content"
+                android:text="@string/confirm" />
+        </LinearLayout>
+    </LinearLayout>
+     -->
+
+</RelativeLayout>
