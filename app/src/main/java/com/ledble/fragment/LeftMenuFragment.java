@@ -1,19 +1,11 @@
 package com.ledble.fragment;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
-import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -43,7 +35,6 @@ import com.common.uitl.LogUtil;
 import com.common.uitl.SharePersistent;
 import com.common.uitl.StringUtils;
 import com.common.uitl.Tool;
-//import com.feicanled.ble.App;
 import com.ledble.R;
 import com.ledble.activity.DeviceListActivity;
 import com.ledble.activity.MainActivity;
@@ -57,6 +48,15 @@ import com.ledble.service.BluetoothLeServiceSingle;
 import com.ledble.view.GroupView;
 import com.ledble.view.SlideSwitch;
 import com.ledble.view.SlideSwitch.SlideListener;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+//import com.feicanled.ble.App;
 /**
  * 左侧菜单
  * @author ftl
@@ -669,7 +669,7 @@ public class LeftMenuFragment extends LedBleFragment {
 			@Override
 			public void run() {
 				while (true && null != mBluetoothLeService) {
-					ArrayList<BluetoothDevice> bldevices = LedBleApplication.getApp().getBleDevices();
+					List<BluetoothDevice> bldevices = LedBleApplication.getApp().getBleDevices();
 					try {
 						for (BluetoothDevice bluetoothDevice : bldevices) {
 							final String address = bluetoothDevice.getAddress();

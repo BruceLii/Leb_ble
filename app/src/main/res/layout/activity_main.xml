@@ -112,10 +112,6 @@
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
-    <!-- 菜单项 -->
-    <!-- 左菜单 -->
-
     <LinearLayout
         android:id="@+id/menu_content_layout"
         android:layout_width="240dp"
@@ -320,109 +316,6 @@
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
-
-    <!-- 右菜单 -->
-
-	<!-- 
-    <ScrollView
-        android:id="@+id/right_menu_frame"
-        android:layout_width="240dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="end"
-        android:background="@color/translucence"
-        android:orientation="vertical" >
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            
-            android:paddingBottom="20dp" >
-
-            <RelativeLayout
-                android:id="@+id/base_setting"
-                android:layout_width="fill_parent"
-                android:layout_height="@dimen/tab_height"
-                android:background="@color/white" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="@string/base_setting"
-                    android:textColor="@android:color/black"
-                    android:textSize="20sp" />
-            </RelativeLayout>
-
-            <View
-                android:id="@+id/base_line"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_below="@id/base_setting"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:background="@color/light_orange" />
-
-            <LinearLayout
-                android:id="@+id/base_layout"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/base_line"
-                android:orientation="vertical" >
-
-                <TextView
-                    android:id="@+id/operation_guide_tv"
-                    android:layout_width="fill_parent"
-                    android:layout_height="45dp"
-                    android:background="@color/translucence"
-                    android:drawablePadding="15dp"
-                    android:drawableRight="@drawable/right_arrow"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="5dp"
-                    android:text="@string/operation_guide"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_small" />
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="0.5dp"
-                    android:background="@color/gray_line_bg" />
-
-                <TextView
-                    android:id="@+id/change_under_pic_tv"
-                    android:layout_width="fill_parent"
-                    android:layout_height="45dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@color/translucence"
-                    android:drawablePadding="15dp"
-                    android:drawableRight="@drawable/right_arrow"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="5dp"
-                    android:text="@string/change_under_image"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_small" />
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="0.5dp"
-                    android:background="#ACAEAD" />
-
-                <TextView
-                    android:id="@+id/reset_tv"
-                    android:layout_width="fill_parent"
-                    android:layout_height="45dp"
-                    android:background="@color/translucence"
-                    android:drawablePadding="15dp"
-                    android:drawableRight="@drawable/right_arrow"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="5dp"
-                    android:text="@string/reset_under_image"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_small" />
-            </LinearLayout>
-        </RelativeLayout>
-    </ScrollView>
-     -->
-    
     <ScrollView
         android:id="@+id/right_menu_frame"
         android:layout_width="240dp"

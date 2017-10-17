@@ -1,7 +1,5 @@
 package com.ledble.adapter;
 
-import java.util.ArrayList;
-
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.view.View;
@@ -11,6 +9,9 @@ import android.widget.TextView;
 
 import com.ledble.R;
 import com.ledble.base.LedBleApplication;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BleDeviceAdapter extends BaseAdapter {
 
@@ -28,7 +29,7 @@ public class BleDeviceAdapter extends BaseAdapter {
 	}
 
 	public void removeDevice(String address) {
-		ArrayList<BluetoothDevice> devices = LedBleApplication.getApp().getBleDevices();
+		List<BluetoothDevice> devices = LedBleApplication.getApp().getBleDevices();
 		ArrayList<BluetoothDevice> deletes=new ArrayList<BluetoothDevice>();
 		for (BluetoothDevice dev : devices) {
 			if (dev.getAddress().equalsIgnoreCase(address)) {
@@ -39,7 +40,7 @@ public class BleDeviceAdapter extends BaseAdapter {
 		notifyDataSetChanged();
 	}
 
-	private ArrayList<BluetoothDevice> getAllDevice() {
+	private List<BluetoothDevice> getAllDevice() {
 		return LedBleApplication.getApp().getBleDevices();
 	}
 

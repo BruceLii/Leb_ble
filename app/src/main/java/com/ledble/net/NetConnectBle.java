@@ -1,19 +1,5 @@
 package com.ledble.net;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.UUID;
-
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
@@ -30,6 +16,20 @@ import com.ledble.base.LedBleApplication;
 import com.ledble.bean.MyColor;
 import com.ledble.db.GroupDevice;
 import com.ledble.db.GroupDeviceDao;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.UUID;
 
 @SuppressLint("NewApi")
 public class NetConnectBle {
@@ -142,7 +142,7 @@ public class NetConnectBle {
 		// ====查找同组的所有设备=======
 		GroupDeviceDao gDao = new GroupDeviceDao(LedBleApplication.getApp());
 		if (StringUtils.isEmpty(groupName)) {
-			ArrayList<BluetoothDevice> bleDecies = LedBleApplication.getApp().getBleDevices();
+			List<BluetoothDevice> bleDecies = LedBleApplication.getApp().getBleDevices();
 			for (int i = 0, isize = bleDecies.size(); i < isize; i++) {
 				this.setAddress.add(bleDecies.get(i).getAddress());
 			}

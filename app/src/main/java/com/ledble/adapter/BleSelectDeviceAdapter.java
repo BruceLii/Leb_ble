@@ -1,9 +1,5 @@
 package com.ledble.adapter;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.view.View;
@@ -16,6 +12,11 @@ import com.common.uitl.ListUtiles;
 import com.ledble.R;
 import com.ledble.base.LedBleApplication;
 import com.ledble.db.GroupDevice;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class BleSelectDeviceAdapter extends BaseAdapter {
 
@@ -44,7 +45,7 @@ public class BleSelectDeviceAdapter extends BaseAdapter {
 	public void setSelected(ArrayList<GroupDevice> groupDevices) {
 		this.groupDevices = groupDevices;
 		if (!ListUtiles.isEmpty(groupDevices)) {
-			ArrayList<BluetoothDevice> blelist = LedBleApplication.getApp().getBleDevices();
+			List<BluetoothDevice> blelist = LedBleApplication.getApp().getBleDevices();
 			for (GroupDevice groupDevice : groupDevices) {
 				for (BluetoothDevice bDevice : blelist) {
 					if (groupDevice.getAddress().equals(bDevice.getAddress())) {
@@ -72,7 +73,7 @@ public class BleSelectDeviceAdapter extends BaseAdapter {
 		this.groupDevices = groupDevices;
 	}
 
-	private ArrayList<BluetoothDevice> getAllDevice() {
+	private List<BluetoothDevice> getAllDevice() {
 		return LedBleApplication.getApp().getBleDevices();
 	}
 
