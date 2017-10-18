@@ -1,8 +1,5 @@
 package com.ledble.service;
 
-import java.util.List;
-import java.util.UUID;
-
 import android.annotation.SuppressLint;
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
@@ -19,6 +16,9 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
+
+import java.util.List;
+import java.util.UUID;
 
 @SuppressLint("NewApi")
 public class BluetoothLeServiceSingle extends Service {
@@ -177,28 +177,13 @@ public class BluetoothLeServiceSingle extends Service {
 			return false;
 		}
 
-		// // Previously connected device. Try to reconnect.
-		// if (mBluetoothDeviceAddress != null &&
-		// address.equals(mBluetoothDeviceAddress) && mBluetoothGatt != null) {
-		// Log.d(TAG, "Trying to use an existing mBluetoothGatt for
-		// connection.");
-		// if (mBluetoothGatt.connect()) {
-		// mConnectionState = STATE_CONNECTING;
-		// return true;
-		// } else {
-		// return false;
-		// }
-		// }
+
 
 		final BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
 		if (device == null) {
 			Log.w(TAG, "Device not found.  Unable to connect.");
 			return false;
 		}
-
-//		if (mBluetoothGatt != null) { //多次创建gatt连接对象的直接结果是创建过6个以上gatt后就会再也连接不上任何设备，原因应该是Android中对BLE限制了同时连接的数量为6个
-//			mBluetoothGatt.close(); //关闭上一个连接
-//		}
 
 		mBluetoothGatt = device.connectGatt(this, false, mGattCallback);
 		mBluetoothDeviceAddress = address;

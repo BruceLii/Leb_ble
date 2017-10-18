@@ -59,7 +59,7 @@ public class LedBleApplication extends Application {
      *
      * @param address
      */
-    public void removeDisconnectDevice(String address) {
+    public synchronized void  removeDisconnectDevice(String address) {
 
         for (int i = 0, isize = bleDevices.size(); i < isize; i++) {
             BluetoothDevice tempDev = bleDevices.get(i);
