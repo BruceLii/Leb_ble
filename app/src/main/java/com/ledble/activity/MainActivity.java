@@ -106,14 +106,13 @@ import java.util.Set;
 import butterknife.Bind;
 
 public class MainActivity extends LedBleActivity implements NetExceptionInterface, SensorEventListener, ActionSheetListener {
-
     private static final int TAKE_PICTURE = 0; //
     private static final int CHOOSE_PICTURE = 1;
     private static final long SCAN_PERIOD = 3000;
     private static final int REQUEST_ENABLE_BT = 1;
-    private static MainActivity mActivity;
-    private static Bitmap bm;
     private final int MSG_START_CONNECT = 10000;// 开始连接
+
+    private static Bitmap bm;
     public boolean isLightOpen = true;
     public int speed = 1;
     public int brightness = 1;
@@ -183,48 +182,34 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
     private int shakeStyle = 1;
     private ImageView imageView = null;
     private TextView textViewAllDeviceIndicater;// 显示所有设备
-    private String allOnStringKey = "isAllon";
     private int INT_GO_LIST = 111;
     private boolean isInitGroup = false;
     private boolean isAllOn = true;
-    private boolean isStop = true;
-    private boolean isFirstOnApp = true;
 
     private volatile HashMap<String, Boolean> hashMapLock;// service连接锁
     private volatile HashMap<String, Boolean> hashMapConnect;
     private Map<String, SlideSwitch> map = new HashMap<>();
     private ArrayList<GroupView> arrayListGroupViews;
-    private SlideSwitch slideSwitch;
-    private boolean booleanCanStart = false;
+
     private Handler conectHandler = new Handler() {
         public void handleMessage(android.os.Message msg) {
-
             switch (msg.what) {
                 case MSG_START_CONNECT:// 可以开始连接了
-                    if (booleanCanStart == false) {
-                        booleanCanStart = true;
-                        // updateNewFindDevice();
-                        BluetoothDevice device = (BluetoothDevice) msg.obj;
-                        startConnectDevices(device);//单次发现，单次连接
-                    }
+                    BluetoothDevice device = (BluetoothDevice) msg.obj;
+                    startConnectDevices(device);//单次发现，单次连接
                     break;
-
                 default:
                     break;
             }
         }
-
-        ;
     };
     /**
      * 成功扫描设备
      */
     private BluetoothAdapter.LeScanCallback mLeScanCallback = new BluetoothAdapter.LeScanCallback() {
-
         @Override
         public void onLeScan(final BluetoothDevice device, int rssi, byte[] scanRecord) {
-
-            mActivity.runOnUiThread(new Runnable() {
+            runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     if (device != null) {
@@ -409,8 +394,6 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
 
-        mActivity = this;
-
         if (Build.VERSION.SDK_INT >= 21) {
             View decorView = getWindow().getDecorView();
             int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
@@ -437,20 +420,20 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
     @SuppressLint("NewApi")
     private void initView() {
 
-        mActivity.registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter());
+        registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter());
 
-        mActivity.registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter());
+        registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter());
         // 是否支持蓝牙
-        if (!mActivity.getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
-            Toast.makeText(mActivity, R.string.ble_not_supported, Toast.LENGTH_SHORT).show();
+        if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
+            Toast.makeText(this, R.string.ble_not_supported, Toast.LENGTH_SHORT).show();
             Tool.exitApp();
         }
 
-        bluetoothManager = (BluetoothManager) mActivity.getSystemService(Context.BLUETOOTH_SERVICE);
+        bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         mBluetoothAdapter = bluetoothManager.getAdapter();
         // 不能获得蓝牙设备支持
         if (mBluetoothAdapter == null) {
-            Tool.ToastShow(mActivity, R.string.ble_not_supported);
+            Tool.ToastShow(MainActivity.this, R.string.ble_not_supported);
             Tool.exitApp();
         }
 
@@ -460,52 +443,52 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
         arrayListGroupViews = new ArrayList<GroupView>();
 
         //右菜单  各个标签项
-        changePicTV = (TextView) mActivity.findViewById(R.id.change_under_pic_tv);
+        changePicTV = (TextView) findViewById(R.id.change_under_pic_tv);
         changePicTV.setOnClickListener(new MyOnClickListener());
-        resetTV = (TextView) mActivity.findViewById(R.id.reset_tv);
+        resetTV = (TextView) findViewById(R.id.reset_tv);
         resetTV.setOnClickListener(new MyOnClickListener());
-        shakeTV = (TextView) mActivity.findViewById(R.id.shake_tv);
+        shakeTV = (TextView) findViewById(R.id.shake_tv);
         shakeTV.setOnClickListener(new MyOnClickListener());
-        dynamicTV = (TextView) mActivity.findViewById(R.id.dynamic_tv);
+        dynamicTV = (TextView) findViewById(R.id.dynamic_tv);
         dynamicTV.setOnClickListener(new MyOnClickListener());
 
         //右菜单   律动各项
-        gradientIV = (ImageView) mActivity.findViewById(R.id.dynamic_gradient_iv);
+        gradientIV = (ImageView) findViewById(R.id.dynamic_gradient_iv);
         gradientIV.setOnClickListener(new MyOnClickListener());
-        breathIV = (ImageView) mActivity.findViewById(R.id.dynamic_breath_iv);
+        breathIV = (ImageView) findViewById(R.id.dynamic_breath_iv);
         breathIV.setOnClickListener(new MyOnClickListener());
-        jumpIV = (ImageView) mActivity.findViewById(R.id.dynamic_jump_iv);
+        jumpIV = (ImageView) findViewById(R.id.dynamic_jump_iv);
         jumpIV.setOnClickListener(new MyOnClickListener());
-        strobeIV = (ImageView) mActivity.findViewById(R.id.dynamic_strobe_iv);
+        strobeIV = (ImageView) findViewById(R.id.dynamic_strobe_iv);
         strobeIV.setOnClickListener(new MyOnClickListener());
-        operationguideTV = (TextView) mActivity.findViewById(R.id.operation_guide_tv);
+        operationguideTV = (TextView) findViewById(R.id.operation_guide_tv);
         operationguideTV.setOnClickListener(new MyOnClickListener());
 
         //右菜单  摇一摇
-        shakeColorIV = (ImageView) mActivity.findViewById(R.id.shake_one_iv);
+        shakeColorIV = (ImageView) findViewById(R.id.shake_one_iv);
         shakeColorIV.setOnClickListener(new MyOnClickListener());
-        shakeNoneIV = (ImageView) mActivity.findViewById(R.id.shake_two_iv);
+        shakeNoneIV = (ImageView) findViewById(R.id.shake_two_iv);
         shakeNoneIV.setOnClickListener(new MyOnClickListener());
-        shakeModelIV = (ImageView) mActivity.findViewById(R.id.shake_three_iv);
+        shakeModelIV = (ImageView) findViewById(R.id.shake_three_iv);
         shakeModelIV.setOnClickListener(new MyOnClickListener());
 
 
         //左侧   菜单
-        imageView = (ImageView) mActivity.findViewById(R.id.activity_main_imageview);
-        linearGroups = (LinearLayout) mActivity.findViewById(R.id.linearLayoutDefineGroups);
-        textViewAllDeviceIndicater = (TextView) mActivity.findViewById(R.id.textViewAllDeviceIndicater);
+        imageView = (ImageView) findViewById(R.id.activity_main_imageview);
+        linearGroups = (LinearLayout) findViewById(R.id.linearLayoutDefineGroups);
+        textViewAllDeviceIndicater = (TextView) findViewById(R.id.textViewAllDeviceIndicater);
         TopItem.setOnClickListener(new MyOnClickListener());
 
-        buttonAllOff = (Button) mActivity.findViewById(R.id.buttonAllOff);
+        buttonAllOff = (Button) findViewById(R.id.buttonAllOff);
         buttonAllOff.setOnClickListener(new MyOnClickListener());
 
-        buttonAllOn = (Button) mActivity.findViewById(R.id.buttonAllOn);
+        buttonAllOn = (Button) findViewById(R.id.buttonAllOn);
         buttonAllOn.setOnClickListener(new MyOnClickListener());
 
-        buttonAddGroup = (Button) mActivity.findViewById(R.id.buttonAddGroup);
+        buttonAddGroup = (Button) findViewById(R.id.buttonAddGroup);
         buttonAddGroup.setOnClickListener(new MyOnClickListener());
 
-        refreshView = (View) mActivity.findViewById(R.id.ivRefresh);
+        refreshView = (View) findViewById(R.id.ivRefresh);
         refreshView.setOnClickListener(new MyOnClickListener());
 
 
@@ -553,10 +536,6 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
         ivType.setOnClickListener(new MyOnClickListener());
         ivLeftMenu.setOnClickListener(new MyOnClickListener());
         ivRightMenu.setOnClickListener(new MyOnClickListener());
-
-        // buttonAllOff.setOnClickListener(new MyOnClickListener());
-        // buttonAllOn.setOnClickListener(new MyOnClickListener());
-        // buttonAddGroup.setOnClickListener(new MyOnClickListener());
 
         rgBottom.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
@@ -719,34 +698,9 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
      * 刷新
      */
     protected void refreshDevices() {
-        Tool.ToastShow(mActivity, R.string.refresh);
+        Tool.ToastShow(MainActivity.this, R.string.refresh);
         disConnectAll();
-
-//		mHandler.postDelayed(new Runnable() {
-//			@Override
-//			public void run() {
-//				isStop = true;
-//				// mScanning = false;
-//				mBluetoothAdapter.stopLeScan(mLeScanCallback);
-//			}
-//		}, SCAN_PERIOD);
-//		isStop = false;
-        // mScanning = true;
         mBluetoothAdapter.startLeScan(mLeScanCallback);
-
-        // disConnectAll();
-//		 LedBleApplication.getApp().getBleDevices().clear();
-//		 LedBleApplication.getApp().getBleGattMap().clear();
-//		 hashMapConnect.clear();
-//		 hashMapLock.clear();
-
-        // mBluetoothAdapter.startLeScan(mLeScanCallback);
-        // initBleScanList(true);
-
-        // updateDevieConnect();
-        // if (isStop) {
-        // scanLeDevice(true);
-        // }
     }
 
     /**
@@ -754,19 +708,19 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
      */
     private void addGroupMessage() {
 
-        final EditText editText = new EditText(mActivity);
-        new AlertDialog.Builder(mActivity).setTitle(R.string.please_input).setIcon(android.R.drawable.ic_dialog_info)
+        final EditText editText = new EditText(MainActivity.this);
+        new AlertDialog.Builder(MainActivity.this).setTitle(R.string.please_input).setIcon(android.R.drawable.ic_dialog_info)
                 .setView(editText).setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
                 String gnameString = editText.getText().toString();
 
-                GroupDeviceDao gDao = new GroupDeviceDao(mActivity);
+                GroupDeviceDao gDao = new GroupDeviceDao(MainActivity.this);
                 ArrayList<Group> groups = gDao.getAllgroup();
                 for (Group group : groups) {
                     if (group.getGroupName().equalsIgnoreCase(gnameString)) { //不能添加相同组名的组
-                        Tool.ToastShow(mActivity, R.string.groupname_cannot_same);
+                        Tool.ToastShow(MainActivity.this, R.string.groupname_cannot_same);
                         return;
                     }
                 }
@@ -787,7 +741,7 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
     private void addGroupByName(String groupName) {
         try {
             // 添加组数据库
-            GroupDeviceDao groupDeviceDao = new GroupDeviceDao(mActivity);
+            GroupDeviceDao groupDeviceDao = new GroupDeviceDao(MainActivity.this);
             groupDeviceDao.addGroup(groupName);
             addGroupView(groupName);
         } catch (Exception e) {
@@ -797,7 +751,7 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
 
     private void addGroupView(final String groupname) {
         // 添加组视图
-        final GroupView groupView = new GroupView(mActivity, groupname, isAllOn);
+        final GroupView groupView = new GroupView(MainActivity.this, groupname, isAllOn);
         final SlideSwitch slideSwitch = groupView.getSlideSwitch();
         linearGroups.addView(groupView.getGroupView());
         map.put(groupname, slideSwitch);
@@ -822,7 +776,7 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
                     if (groupView.getConnect() > 0) {
                         // gotoMain(groupName, groupView);
                     } else {
-                        Tool.ToastShow(mActivity, R.string.edit_group_please);
+                        Tool.ToastShow(MainActivity.this, R.string.edit_group_please);
 //						gotoEdit(groupName);
                         showActionSheet(groupname);
                     }
@@ -862,9 +816,9 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
      * @param groupName
      */
     private void gotoEdit(final String groupName) {
-        Intent intent = new Intent(mActivity, DeviceListActivity.class);
+        Intent intent = new Intent(MainActivity.this, DeviceListActivity.class);
         intent.putExtra("group", groupName);
-        GroupDeviceDao groupDeviceDao = new GroupDeviceDao(mActivity);
+        GroupDeviceDao groupDeviceDao = new GroupDeviceDao(MainActivity.this);
         ArrayList<GroupDevice> devices = groupDeviceDao.getDevicesByGroup(groupName);
         if (!ListUtiles.isEmpty(devices)) {
             intent.putExtra("devices", devices);
@@ -945,12 +899,10 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
      * @param enable
      */
     private void scanLeDevice(final boolean enable) {
-        Tool.ToastShow(mActivity, R.string.refresh);
+        Tool.ToastShow(MainActivity.this, R.string.refresh);
         if (enable) {
             refreshDevices();
         } else {
-            isStop = true;
-            // mScanning = false;
             mBluetoothAdapter.stopLeScan(mLeScanCallback);
         }
     }
@@ -963,7 +915,6 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                // TODO Auto-generated method stub
                 // 在此处添加执行的代码
                 final String connect = getResources().getString(R.string.conenct_device, LedBleApplication.getApp().getBleDevices().size(), hashMapConnect.size());
                 textViewAllDeviceIndicater.setText(connect);
@@ -971,7 +922,7 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
                 handler.removeCallbacks(this);// 关闭定时器处理
             }
         };
-        handler.postDelayed(runnable, 2000);// 打开定时器，2秒后执行runnable
+        handler.postDelayed(runnable, 2000);
     }
 
     /**
@@ -1077,7 +1028,7 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
      * 首次初始化组视图
      */
     private void initGroup(boolean isAllOn) {
-        GroupDeviceDao gDao = new GroupDeviceDao(mActivity);
+        GroupDeviceDao gDao = new GroupDeviceDao(MainActivity.this);
         ArrayList<Group> groups = gDao.getAllgroup();
         for (Group group : groups) {
             addGroupViewFromInit(group.getGroupName(), group.getIsOn(), isAllOn);
@@ -1086,9 +1037,9 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
 
     private void addGroupViewFromInit(final String groupname, final String ison, final boolean isAllOn) {
         // 添加组视图
-        final GroupView groupView = new GroupView(mActivity, groupname, isAllOn);
+        final GroupView groupView = new GroupView(MainActivity.this, groupname, isAllOn);
 
-        GroupDeviceDao groupDeviceDao = new GroupDeviceDao(mActivity);
+        GroupDeviceDao groupDeviceDao = new GroupDeviceDao(MainActivity.this);
         final ArrayList<GroupDevice> groupDevices = groupDeviceDao.getDevicesByGroup(groupname);// 相同组的所有设备
         if (!ListUtiles.isEmpty(groupDevices)) {
             groupView.setGroupDevices(groupDevices);
@@ -1118,7 +1069,7 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
                     if (groupView.getConnect() > 0) {
                         // gotoMain(groupName, groupView);
                     } else {
-                        Tool.ToastShow(mActivity, R.string.edit_group_please);
+                        Tool.ToastShow(MainActivity.this, R.string.edit_group_please);
 //						gotoEdit(groupName);
                         showActionSheet(groupname);
                     }
@@ -1148,14 +1099,14 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
 
     private void showDeleteDialog(final String groupName) {
 
-        Dialog alertDialog = new AlertDialog.Builder(mActivity).setTitle(getResources().getString(R.string.tips))
+        Dialog alertDialog = new AlertDialog.Builder(MainActivity.this).setTitle(getResources().getString(R.string.tips))
                 .setMessage(getResources().getString(R.string.delete_group, groupName))
                 .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         try {
-                            GroupDeviceDao gDao = new GroupDeviceDao(mActivity);
+                            GroupDeviceDao gDao = new GroupDeviceDao(MainActivity.this);
                             gDao.deleteGroup(groupName);
                             gDao.delteByGroup(groupName);
                             linearGroups.removeView(linearGroups.findViewWithTag(groupName));
@@ -1185,7 +1136,7 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
      * @throws Exception
      */
     private void save2GroupByGroupName(String groupName, Set<BluetoothDevice> selectSet) throws Exception {
-        GroupDeviceDao groupDeviceDao = new GroupDeviceDao(mActivity);
+        GroupDeviceDao groupDeviceDao = new GroupDeviceDao(MainActivity.this);
         // 删除原来组的设备，重新添加新的设备
         groupDeviceDao.delteByGroup(groupName);// 删除原有的设备
         ArrayList<GroupDevice> groupDevices = new ArrayList<GroupDevice>();
@@ -1279,7 +1230,7 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
                 String grop = data.getStringExtra("group");
                 save2GroupByGroupName(grop, LedBleApplication.getApp().getTempDevices());// 保存新的组到数据库
                 // ==========
-                GroupDeviceDao groupDeviceDao = new GroupDeviceDao(mActivity);
+                GroupDeviceDao groupDeviceDao = new GroupDeviceDao(MainActivity.this);
                 ArrayList<GroupDevice> list = groupDeviceDao.getDevicesByGroup(grop);
 
                 for (GroupView groupView : arrayListGroupViews) {
@@ -1295,7 +1246,7 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
 
             } catch (Exception e) {
                 e.printStackTrace();
-                Tool.ToastShow(mActivity, "保存失败！");
+                Tool.ToastShow(MainActivity.this, "保存失败！");
             }
         } else {
             if (resultCode == RESULT_OK) {
@@ -1320,7 +1271,7 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
                                     bm = MediaStore.Images.Media.getBitmap(resolver, originalUri);
                                     if (bm != null) {
 
-                                        String img_path = getRealPathFromUri(mActivity, originalUri);// 这是本机的图片路径
+                                        String img_path = getRealPathFromUri(MainActivity.this, originalUri);// 这是本机的图片路径
                                         showImage(img_path);
 
                                         saveImagePathToSharedPreferences(img_path);// 保存图片
@@ -1494,7 +1445,7 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
 
         unbindService(myServiceConenction);
         unregisterReceiver(mGattUpdateReceiver);
-//		mActivity.unregisterReceiver(mGattUpdateReceiver);
+//		unregisterReceiver(mGattUpdateReceiver);
         hashMapConnect = null;
         hashMapLock = null;
     }
@@ -1503,22 +1454,22 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
     protected void onStop() {
         super.onStop();
 
-        if (isBackground(mActivity)) { //app进入后台停止扫描
+        if (isBackground(MainActivity.this)) { //app进入后台停止扫描
             mBluetoothAdapter.stopLeScan(mLeScanCallback);
-//			Toast.makeText(mActivity, "当前为后台", Toast.LENGTH_SHORT).show();
+//			Toast.makeText(MainActivity.this, "当前为后台", Toast.LENGTH_SHORT).show();
         } else {
 
-//			Toast.makeText(mActivity, "当前为前台", Toast.LENGTH_SHORT).show();
+//			Toast.makeText(MainActivity.this, "当前为前台", Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-//		MobclickAgent.onResume(mActivity);
+//		MobclickAgent.onResume(MainActivity.this);
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
         mBluetoothAdapter.startLeScan(mLeScanCallback);
-//		Toast.makeText(mActivity, "从后台切换回前台", Toast.LENGTH_SHORT).show();
+//		Toast.makeText(MainActivity.this, "从后台切换回前台", Toast.LENGTH_SHORT).show();
     }
 
     public SegmentedRadioGroup getSegmentDm() {
@@ -1571,7 +1522,7 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
                     break;
 
                 case R.id.buttonAllOff:
-                    // Toast.makeText(mActivity, "全关", Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(MainActivity.this, "全关", Toast.LENGTH_SHORT).show();
                     allOff();
                     break;
                 case R.id.buttonAllOn:
@@ -1585,42 +1536,42 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
                     break;
 
                 case R.id.dynamic_tv:// 律动
-                    startActivity(new Intent(mActivity, DynamicColorActivity.class));
+                    startActivity(new Intent(MainActivity.this, DynamicColorActivity.class));
                     break;
                 case R.id.dynamic_gradient_iv: // 律动  渐变
                     setDynamicModel(128);
-                    Toast.makeText(mActivity, R.string.gradient, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, R.string.gradient, Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.dynamic_breath_iv: // 渐变	呼吸
                     setDynamicModel(129);
-                    Toast.makeText(mActivity, R.string.breathe, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, R.string.breathe, Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.dynamic_jump_iv: // 律动	跳变
                     setDynamicModel(130);
-                    Toast.makeText(mActivity, R.string.jump, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, R.string.jump, Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.dynamic_strobe_iv: // 律动 	频闪
                     setDynamicModel(131);
-                    Toast.makeText(mActivity, R.string.flash, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, R.string.flash, Toast.LENGTH_SHORT).show();
                     break;
 
 
                 case R.id.shake_one_iv:// 摇一摇	颜色
-                    Toast.makeText(mActivity, R.string.shake_random_color, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, R.string.shake_random_color, Toast.LENGTH_SHORT).show();
                     shakeStyle = 0;
                     break;
                 case R.id.shake_two_iv:// 摇一摇	NONE
-                    Toast.makeText(mActivity, R.string.shake_random_none, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, R.string.shake_random_none, Toast.LENGTH_SHORT).show();
                     shakeStyle = 1;
                     break;
                 case R.id.shake_three_iv:// 摇一摇		模式
-                    Toast.makeText(mActivity, R.string.shake_random_mode, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, R.string.shake_random_mode, Toast.LENGTH_SHORT).show();
                     shakeStyle = 2;
                     break;
 
 
                 case R.id.operation_guide_tv: // 操作指南
-                    Intent intent = new Intent(mActivity, OprationManualActivity.class);
+                    Intent intent = new Intent(MainActivity.this, OprationManualActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.change_under_pic_tv: // 更换皮肤
