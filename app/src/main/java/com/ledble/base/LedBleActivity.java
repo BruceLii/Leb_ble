@@ -40,7 +40,7 @@ public class LedBleActivity extends AppCompatActivity {
 		return baseApp;
 	}
 	
-	//app 进入后台保持运行状态
+	//instance 进入后台保持运行状态
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_HOME) {

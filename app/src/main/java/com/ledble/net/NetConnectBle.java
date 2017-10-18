@@ -78,7 +78,7 @@ public class NetConnectBle {
 	 */
 	public void sendCharacteristic(byte[] data) {
 
-		HashMap<String, BluetoothGatt> gattMap = LedBleApplication.getApp().getBleGattMap();
+		HashMap<String, BluetoothGatt> gattMap = LedBleApplication.getInstance().getBleGattMap();
 		if (null != gattMap && !gattMap.isEmpty() && (!ListUtiles.isEmpty(groupDevices) || StringUtils.isEmpty(groupName))) {
 
 			for (Entry<String, BluetoothGatt> gats : gattMap.entrySet()) {
@@ -140,9 +140,9 @@ public class NetConnectBle {
 		this.groupName = groupName;
 		this.setAddress.clear();// 清空所有的设备
 		// ====查找同组的所有设备=======
-		GroupDeviceDao gDao = new GroupDeviceDao(LedBleApplication.getApp());
+		GroupDeviceDao gDao = new GroupDeviceDao(LedBleApplication.getInstance());
 		if (StringUtils.isEmpty(groupName)) {
-			List<BluetoothDevice> bleDecies = LedBleApplication.getApp().getBleDevices();
+			List<BluetoothDevice> bleDecies = LedBleApplication.getInstance().getBleDevices();
 			for (int i = 0, isize = bleDecies.size(); i < isize; i++) {
 				this.setAddress.add(bleDecies.get(i).getAddress());
 			}
@@ -609,7 +609,7 @@ public class NetConnectBle {
 	}
 
 	public void closeBle() {
-		HashMap<String, BluetoothGatt> gattMap = LedBleApplication.getApp().getBleGattMap();
+		HashMap<String, BluetoothGatt> gattMap = LedBleApplication.getInstance().getBleGattMap();
 		if (null != gattMap && !gattMap.isEmpty()) {
 			for (Entry<String, BluetoothGatt> entry : gattMap.entrySet()) {
 				entry.getValue().close();

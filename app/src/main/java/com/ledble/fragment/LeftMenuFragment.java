@@ -252,8 +252,8 @@ public class LeftMenuFragment extends LedBleFragment {
 		Tool.ToastShow(activity, R.string.refresh);
 		
 //		disConnectAll();
-//		LedBleApplication.getApp().getBleDevices().clear();
-//		LedBleApplication.getApp().getBleGattMap().clear();
+//		LedBleApplication.getInstance().getBleDevices().clear();
+//		LedBleApplication.getInstance().getBleGattMap().clear();
 //		hashMapConnect.clear();
 //		hashMapLock.clear();
 		
@@ -286,11 +286,11 @@ public class LeftMenuFragment extends LedBleFragment {
 				// hashMapConnect.put(address,false);//删除连接计数
 
 				hashMapConnect.remove(address);
-				LedBleApplication.getApp().removeDisconnectDevice(address);// 删除断开的device
-				LedBleApplication.getApp().getBleGattMap().remove(address);// 删除断开的blgatt
+				LedBleApplication.getInstance().removeDisconnectDevice(address);// 删除断开的device
+				LedBleApplication.getInstance().getBleGattMap().remove(address);// 删除断开的blgatt
 //				hashMapLock.remove(address);// 删除锁
 				updateDevieConnect();
-				LogUtil.i(LedBleApplication.tag, "disconnect:" + address + " connected devices:" + LedBleApplication.getApp().getBleDevices().size());
+				LogUtil.i(LedBleApplication.tag, "disconnect:" + address + " connected devices:" + LedBleApplication.getInstance().getBleDevices().size());
 				
 				
 				mBluetoothAdapter.startLeScan(mLeScanCallback); //开始搜索 
@@ -305,7 +305,7 @@ public class LeftMenuFragment extends LedBleFragment {
 //				BluetoothGattService service33 = blgat.getService(UUID.fromString(NetConnectBle.serviceid33));
 //				BluetoothGattService service34 = blgat.getService(UUID.fromString(NetConnectBle.serviceid34));
 //				if (service32 != null || service33 != null || service34 != null) {
-					LedBleApplication.getApp().getBleGattMap().put(address, blgat);
+					LedBleApplication.getInstance().getBleGattMap().put(address, blgat);
 					hashMapLock.put(address, true);// 解锁
 					LogUtil.i(LedBleApplication.tag, "发现service" + intent.getStringExtra("address"));
 //				}
@@ -543,7 +543,7 @@ public class LeftMenuFragment extends LedBleFragment {
 	 * 更新发现新的设备
 	 */
 	private void updateNewFindDevice() {
-		String connected = getResources().getString(R.string.conenct_device, LedBleApplication.getApp().getBleDevices().size(), hashMapConnect.size());
+		String connected = getResources().getString(R.string.conenct_device, LedBleApplication.getInstance().getBleDevices().size(), hashMapConnect.size());
 		textViewAllDeviceIndicater.setText(connected);
 		updateDevieConnect();
 	}
@@ -553,7 +553,7 @@ public class LeftMenuFragment extends LedBleFragment {
 	 */
 	private void updateDevieConnect() {
 
-		final String connected = getResources().getString(R.string.conenct_device, LedBleApplication.getApp().getBleDevices().size(), hashMapConnect.size());
+		final String connected = getResources().getString(R.string.conenct_device, LedBleApplication.getInstance().getBleDevices().size(), hashMapConnect.size());
 		if (hashMapConnect.size() > 0) {
 			new Handler().postDelayed(new Runnable() {
 				
@@ -595,7 +595,7 @@ public class LeftMenuFragment extends LedBleFragment {
 				@Override
 				public void run() {					
 					if (device != null) {
-						if (!LedBleApplication.getApp().getBleDevices().contains(device) && device.getName() != null) {
+						if (!LedBleApplication.getInstance().getBleDevices().contains(device) && device.getName() != null) {
 							String name = device.getName();
 							
 							
@@ -614,10 +614,10 @@ public class LeftMenuFragment extends LedBleFragment {
 //								if (name.startsWith(BluetoothLeServiceSingle.NAME_START_ELK) 
 //										|| name.startsWith(BluetoothLeServiceSingle.NAME_START_LED)
 //										|| name.startsWith(BluetoothLeServiceSingle.NAME_START_TV)) {
-//									LedBleApplication.getApp().getBleDevices().add(device);
+//									LedBleApplication.getInstance().getBleDevices().add(device);
 //									updateNewFindDevice();
 //									LogUtil.i(LedBleApplication.tag, "++++++++++++++++++++++++++++++++++++++++++++++++");
-//									LogUtil.i(LedBleApplication.tag, "发现新设备：" + device.getAddress() + " total:" + LedBleApplication.getApp().getBleDevices().size());
+//									LogUtil.i(LedBleApplication.tag, "发现新设备：" + device.getAddress() + " total:" + LedBleApplication.getInstance().getBleDevices().size());
 //									conectHandler.sendEmptyMessage(MSG_START_CONNECT);// 可以开始连接设备了
 //								}
 //							}
@@ -627,9 +627,9 @@ public class LeftMenuFragment extends LedBleFragment {
 							if (name.startsWith(BluetoothLeServiceSingle.NAME_START_ELK) 
 									|| name.startsWith(BluetoothLeServiceSingle.NAME_START_LED)
 									|| name.startsWith(BluetoothLeServiceSingle.NAME_START_TV)) {
-								LedBleApplication.getApp().getBleDevices().add(device);
+								LedBleApplication.getInstance().getBleDevices().add(device);
 								updateNewFindDevice();
-								LogUtil.i(LedBleApplication.tag, "发现新设备：" + device.getAddress() + " total:" + LedBleApplication.getApp().getBleDevices().size());
+								LogUtil.i(LedBleApplication.tag, "发现新设备：" + device.getAddress() + " total:" + LedBleApplication.getInstance().getBleDevices().size());
 								conectHandler.sendEmptyMessage(MSG_START_CONNECT);// 可以开始连接设备了
 							}
 							
@@ -669,12 +669,12 @@ public class LeftMenuFragment extends LedBleFragment {
 			@Override
 			public void run() {
 				while (true && null != mBluetoothLeService) {
-					List<BluetoothDevice> bldevices = LedBleApplication.getApp().getBleDevices();
+					List<BluetoothDevice> bldevices = LedBleApplication.getInstance().getBleDevices();
 					try {
 						for (BluetoothDevice bluetoothDevice : bldevices) {
 							final String address = bluetoothDevice.getAddress();
 							final String name = bluetoothDevice.getName();
-							if (!LedBleApplication.getApp().getBleGattMap().containsKey(address) && null != mBluetoothLeService) {// 如果不存在，可以连接设备了
+							if (!LedBleApplication.getInstance().getBleGattMap().containsKey(address) && null != mBluetoothLeService) {// 如果不存在，可以连接设备了
 								mBluetoothLeService.connect(address, name);
 								hashMapLock.put(address, false);// 上锁
 								while (true) {// 如果已经解锁那就可以进行下一次连接了
@@ -806,7 +806,7 @@ public class LeftMenuFragment extends LedBleFragment {
 		if (resultCode == Activity.RESULT_OK && requestCode == INT_GO_LIST) {
 			try {
 				String grop = data.getStringExtra("group");
-				save2GroupByGroupName(grop, LedBleApplication.getApp().getTempDevices());// 保存新的组到数据库
+				save2GroupByGroupName(grop, LedBleApplication.getInstance().getTempDevices());// 保存新的组到数据库
 				// ==========
 				GroupDeviceDao groupDeviceDao = new GroupDeviceDao(activity);
 				ArrayList<GroupDevice> list = groupDeviceDao.getDevicesByGroup(grop);

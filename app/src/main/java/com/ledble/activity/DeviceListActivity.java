@@ -63,7 +63,7 @@ public class DeviceListActivity extends BaseActivity {
 		findButtonById(R.id.buttonFireBind).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				LedBleApplication.getApp().setTempDevices(bleDeviceAdapter.getSelectSet());
+				LedBleApplication.getInstance().setTempDevices(bleDeviceAdapter.getSelectSet());
 				Intent data = new Intent();
 				data.putExtra("group", groupName);
 				setResult(Activity.RESULT_OK, data);

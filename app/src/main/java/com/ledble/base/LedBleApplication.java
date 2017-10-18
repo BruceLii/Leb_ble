@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 
 import com.ledble.bean.Mp3;
+import com.ledble.utils.ConnectManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,14 +16,19 @@ import java.util.Set;
 public class LedBleApplication extends Application {
 
     public static final String tag = "ble";
-    public static LedBleApplication app;
+    public static LedBleApplication instance;
+    /**
+     * scanned  specified  bluetoothDevice .....(扫描到的专用蓝牙设备）
+     */
     private List<BluetoothDevice> bleDevices = Collections.synchronizedList(new ArrayList<BluetoothDevice>());
     private Set<BluetoothDevice> tempDevices;
     private HashMap<String, BluetoothGatt> hashMapGatt;
     private ArrayList<Mp3> mp3s;
 
-    public static LedBleApplication getApp() {
-        return app;
+    public static ConnectManager connectManager = ConnectManager.getInstance();
+
+    public static LedBleApplication getInstance() {
+        return instance;
     }
 
     @Override
@@ -30,7 +36,7 @@ public class LedBleApplication extends Application {
         super.onCreate();
         hashMapGatt = new HashMap<String, BluetoothGatt>();
         mp3s = new ArrayList<Mp3>();
-        app = this;
+        instance = this;
 
     }
 
@@ -59,7 +65,7 @@ public class LedBleApplication extends Application {
      *
      * @param address
      */
-    public synchronized void  removeDisconnectDevice(String address) {
+    public synchronized void removeDisconnectDevice(String address) {
 
         for (int i = 0, isize = bleDevices.size(); i < isize; i++) {
             BluetoothDevice tempDev = bleDevices.get(i);

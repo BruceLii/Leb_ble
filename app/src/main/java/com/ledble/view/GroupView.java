@@ -104,19 +104,19 @@ public class GroupView {
 	public void setGroupDevices(ArrayList<GroupDevice> groupDevices) {
 		this.groupDevices = groupDevices;
 		// String
-		// tot=App.getApp().getResources().getString(R.string.conenct_device,(ListUtiles.isEmpty(groupDevices)?0:this.groupDevices.size()),0);
+		// tot=App.getInstance().getResources().getString(R.string.conenct_device,(ListUtiles.isEmpty(groupDevices)?0:this.groupDevices.size()),0);
 		// setConnect(tot);
 		setConnectCount(0);
 	}
 
 	public void setConnect(String connected) {
-		String connectdDevice = LedBleApplication.getApp().getResources().getString(R.string.connect_count, connected);
+		String connectdDevice = LedBleApplication.getInstance().getResources().getString(R.string.connect_count, connected);
 		this.textViewTotal.setText(connectdDevice);
 	}
 
 	public void setConnectCount(int count) {
 		this.connect = count;
-		String connectdDevice = LedBleApplication.getApp().getResources().getString(R.string.connect_count, count);
+		String connectdDevice = LedBleApplication.getInstance().getResources().getString(R.string.connect_count, count);
 		this.textViewTotal.setText(connectdDevice);
 		juedg();
 	}

@@ -45,7 +45,7 @@ public class BleSelectDeviceAdapter extends BaseAdapter {
 	public void setSelected(ArrayList<GroupDevice> groupDevices) {
 		this.groupDevices = groupDevices;
 		if (!ListUtiles.isEmpty(groupDevices)) {
-			List<BluetoothDevice> blelist = LedBleApplication.getApp().getBleDevices();
+			List<BluetoothDevice> blelist = LedBleApplication.getInstance().getBleDevices();
 			for (GroupDevice groupDevice : groupDevices) {
 				for (BluetoothDevice bDevice : blelist) {
 					if (groupDevice.getAddress().equals(bDevice.getAddress())) {
@@ -59,8 +59,8 @@ public class BleSelectDeviceAdapter extends BaseAdapter {
 	}
 
 	public void addDevice(BluetoothDevice device) {
-		if (!LedBleApplication.getApp().getBleDevices().contains(device)) {
-			LedBleApplication.getApp().getBleDevices().add(device);
+		if (!LedBleApplication.getInstance().getBleDevices().contains(device)) {
+			LedBleApplication.getInstance().getBleDevices().add(device);
 		}
 		notifyDataSetChanged();
 	}
@@ -74,25 +74,25 @@ public class BleSelectDeviceAdapter extends BaseAdapter {
 	}
 
 	private List<BluetoothDevice> getAllDevice() {
-		return LedBleApplication.getApp().getBleDevices();
+		return LedBleApplication.getInstance().getBleDevices();
 	}
 
 	public BluetoothDevice getDevice(int position) {
-		return LedBleApplication.getApp().getBleDevices().get(position);
+		return LedBleApplication.getInstance().getBleDevices().get(position);
 	}
 
 	public void clear() {
-		LedBleApplication.getApp().getBleDevices().clear();
+		LedBleApplication.getInstance().getBleDevices().clear();
 	}
 
 	@Override
 	public int getCount() {
-		return LedBleApplication.getApp().getBleDevices().size();
+		return LedBleApplication.getInstance().getBleDevices().size();
 	}
 
 	@Override
 	public Object getItem(int i) {
-		return LedBleApplication.getApp().getBleDevices().get(i);
+		return LedBleApplication.getInstance().getBleDevices().get(i);
 	}
 
 	@Override
@@ -115,7 +115,7 @@ public class BleSelectDeviceAdapter extends BaseAdapter {
 			viewHolder = (ViewHolder) view.getTag();
 		}
 
-		BluetoothDevice device = LedBleApplication.getApp().getBleDevices().get(i);
+		BluetoothDevice device = LedBleApplication.getInstance().getBleDevices().get(i);
 		final String deviceName = device.getName();
 		if (deviceName != null && deviceName.length() > 0) {
 			viewHolder.deviceName.setText(deviceName);

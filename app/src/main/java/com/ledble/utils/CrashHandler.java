@@ -132,7 +132,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
 			@Override
 			public void run() {
 				Looper.prepare();
-				Toast.makeText(mContext, "sorry app is crash!", Toast.LENGTH_SHORT).show();
+				Toast.makeText(mContext, "sorry instance is crash!", Toast.LENGTH_SHORT).show();
 				Looper.loop();
 			}
 		}.start();
@@ -280,8 +280,8 @@ public class CrashHandler implements UncaughtExceptionHandler {
 	private void exit() {
 		// 杀进程，关闭应用
 		android.os.Process.killProcess(android.os.Process.myPid());
-		// android.app.ActivityManager activityMgr =
-		// (android.app.ActivityManager) mContext
+		// android.instance.ActivityManager activityMgr =
+		// (android.instance.ActivityManager) mContext
 		// .getSystemService(Context.ACTIVITY_SERVICE);
 		// activityMgr.restartPackage(mContext.getPackageName());
 		// System.exit(0);

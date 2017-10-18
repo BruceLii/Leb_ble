@@ -46,6 +46,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.text.style.LeadingMarginSpan;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -70,6 +71,7 @@ import com.common.view.SegmentedRadioGroup;
 import com.ledble.R;
 import com.ledble.base.LedBleActivity;
 import com.ledble.base.LedBleApplication;
+import com.ledble.bean.BluetoothDeviceModel;
 import com.ledble.bean.MyColor;
 import com.ledble.constant.Constant;
 import com.ledble.db.Group;
@@ -213,15 +215,20 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
                 @Override
                 public void run() {
                     if (device != null) {
-                        if (!LedBleApplication.getApp().getBleDevices().contains(device) && device.getName() != null) {
+                        if (!LedBleApplication.getInstance().getBleDevices().contains(device) && device.getName() != null) {
                             String name = device.getName();
 
                             if (name.startsWith(BluetoothLeServiceSingle.NAME_START_ELK)
                                     || name.startsWith(BluetoothLeServiceSingle.NAME_START_LED)
                                     || name.startsWith(BluetoothLeServiceSingle.NAME_START_TV)
                                     || name.startsWith(BluetoothLeServiceSingle.NAME_START_HEI)) {
-                                LedBleApplication.getApp().getBleDevices().add(device);
-                                LogUtil.i(LedBleApplication.tag, "发现新设备：" + device.getAddress() + " total:" + LedBleApplication.getApp().getBleDevices().size());
+
+                                BluetoothDeviceModel deviceModel = new BluetoothDeviceModel();
+                                deviceModel.device = device;
+                                LedBleApplication.getInstance().connectManager.scanedDevice.add(deviceModel);
+
+                                LedBleApplication.getInstance().getBleDevices().add(device);
+                                LogUtil.i(LedBleApplication.tag, "发现新设备：" + device.getAddress() + " total:" + LedBleApplication.getInstance().getBleDevices().size());
 //                                conectHandler.sendEmptyMessage(MSG_START_CONNECT);// 可以开始连接设备了 发现单个设备
                                 Message m = Message.obtain();
                                 m.what = MSG_START_CONNECT;
@@ -244,31 +251,30 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
             System.out.println("接收廣播action-->" + action);
             String address = intent.getStringExtra("address");
             if (BluetoothLeServiceSingle.ACTION_GATT_CONNECTED.equals(action)) {// 连接到设备
-
                 hashMapConnect.put(address, true);
                 updateDevieConnect();
                 LogUtil.i(LedBleApplication.tag, "connect:" + address);
-
                 mBluetoothAdapter.stopLeScan(mLeScanCallback);
+                LedBleApplication.connectManager.updateConnectState(address,true);
 
             } else if (BluetoothLeServiceSingle.ACTION_GATT_DISCONNECTED.equals(action)) {// 设断开备
                 hashMapConnect.remove(address);
-                LedBleApplication.getApp().removeDisconnectDevice(address);// 删除断开的device
-                LedBleApplication.getApp().getBleGattMap().remove(address);// 删除断开的blgatt
+                LedBleApplication.getInstance().removeDisconnectDevice(address);// 删除断开的device
+                LedBleApplication.getInstance().getBleGattMap().remove(address);// 删除断开的blgatt
                 hashMapLock.remove(address);// 删除锁
                 updateDevieConnect();
-                LogUtil.i(LedBleApplication.tag, "disconnect:" + address + " connected devices:"
-                        + LedBleApplication.getApp().getBleDevices().size());
+                LogUtil.i(LedBleApplication.tag, "disconnect:" + address + " connected devices:" + LedBleApplication.getInstance().getBleDevices().size());
 
                 mBluetoothAdapter.startLeScan(mLeScanCallback);
 
             } else if (BluetoothLeServiceSingle.ACTION_GATT_SERVICES_DISCOVERED.equals(action)) {// 发现service,就可以获取Characteristic
                 // 发现之后依次连接
                 BluetoothGatt blgat = mBluetoothLeService.getBluetoothGatt();
-                LedBleApplication.getApp().getBleGattMap().put(address, blgat);
+                LedBleApplication.getInstance().getBleGattMap().put(address, blgat);
                 hashMapLock.put(address, true);// 解锁
                 LogUtil.i(LedBleApplication.tag, "发现service" + intent.getStringExtra("address"));
             } else if (BluetoothLeServiceSingle.ACTION_DATA_AVAILABLE.equals(action)) {// 读取到数据，不做处理，本应用不需要读取数据
+
             }
         }
     };
@@ -280,15 +286,15 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
      */
     public static String getRealPathFromUri(Context context, Uri uri) {
         int sdkVersion = Build.VERSION.SDK_INT;
+
         if (sdkVersion < 11) {
-            // SDK < Api11
             return getRealPathFromUri_BelowApi11(context, uri);
         }
+
         if (sdkVersion < 19) {
-            // SDK > 11 && SDK < 19
             return getRealPathFromUri_Api11To18(context, uri);
         }
-        // SDK > 19
+
         return getRealPathFromUri_AboveApi19(context, uri);
     }
 
@@ -400,6 +406,7 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
             decorView.setSystemUiVisibility(option);
             getWindow().setStatusBarColor(Color.TRANSPARENT); //透明 状态栏
         }
+
 
         initFragment();
         initSlidingMenu();
@@ -628,11 +635,8 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
      * 初始化滑动菜单
      */
     private void initSlidingMenu() {
-
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerLayout.setScrimColor(Color.TRANSPARENT);
-        // mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow,
-        // GravityCompat.START);
     }
 
     /**
@@ -916,7 +920,7 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
             @Override
             public void run() {
                 // 在此处添加执行的代码
-                final String connect = getResources().getString(R.string.conenct_device, LedBleApplication.getApp().getBleDevices().size(), hashMapConnect.size());
+                final String connect = getResources().getString(R.string.conenct_device, LedBleApplication.getInstance().getBleDevices().size(), hashMapConnect.size());
                 textViewAllDeviceIndicater.setText(connect);
 
                 handler.removeCallbacks(this);// 关闭定时器处理
@@ -930,7 +934,7 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
      */
     private void updateDevieConnect() {
 
-        final String connected = getResources().getString(R.string.conenct_device, LedBleApplication.getApp().getBleDevices().size(), hashMapConnect.size());
+        final String connected = getResources().getString(R.string.conenct_device, LedBleApplication.getInstance().getBleDevices().size(), hashMapConnect.size());
 
         new Handler().postDelayed(new Runnable() {
 
@@ -973,55 +977,12 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
             public void run() {
                 final String address = device.getAddress();
                 final String name = device.getName();
-                if (!LedBleApplication.getApp().getBleGattMap().containsKey(address) && null != mBluetoothLeService) {// 如果不存在，可以连接设备了
+                if (!LedBleApplication.getInstance().getBleGattMap().containsKey(address) && null != mBluetoothLeService) {// 如果不存在，可以连接设备了
                     mBluetoothLeService.connect(address, name);
                     hashMapLock.put(address, false);// 上锁
                 }
             }
         }).start();
-
-    }
-
-    /**
-     * 开始连接设备，设备的连接是异步的，必须等到一个设备连接成功后(发现service)才能连接新的设备
-     */
-    private void startConnectDevices() {
-        System.out.println("mBluetoothLeService:" + mBluetoothLeService);
-        final int delayTime = 50 /* 500*/;
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true && null != mBluetoothLeService) {
-                    List<BluetoothDevice> bldevices = LedBleApplication.getApp().getBleDevices();
-                    try {
-                        for (BluetoothDevice bluetoothDevice : bldevices) {
-                            final String address = bluetoothDevice.getAddress();
-                            final String name = bluetoothDevice.getName();
-                            if (!LedBleApplication.getApp().getBleGattMap().containsKey(address)
-                                    && null != mBluetoothLeService) {// 如果不存在，可以连接设备了
-
-                                mBluetoothLeService.connect(address, name);
-                                hashMapLock.put(address, false);// 上锁
-
-                                while (true) {// 如果已经解锁那就可以进行下一次连接了
-                                    Tool.delay(delayTime);
-                                    if (hashMapLock.get(address)) {
-                                        break;
-                                    }
-                                }
-                            }
-                            Tool.delay(delayTime);
-                        }
-
-                    } catch (Exception e) {
-                        e.printStackTrace();// 防止出现并发修改异常
-                        Log.e("fatal error ", e.toString());
-                    }
-                    Tool.delay(delayTime);
-                }
-            }
-        }).start();
-
     }
 
     /**
@@ -1228,7 +1189,7 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
         if (resultCode == Activity.RESULT_OK && requestCode == INT_GO_LIST) {
             try {
                 String grop = data.getStringExtra("group");
-                save2GroupByGroupName(grop, LedBleApplication.getApp().getTempDevices());// 保存新的组到数据库
+                save2GroupByGroupName(grop, LedBleApplication.getInstance().getTempDevices());// 保存新的组到数据库
                 // ==========
                 GroupDeviceDao groupDeviceDao = new GroupDeviceDao(MainActivity.this);
                 ArrayList<GroupDevice> list = groupDeviceDao.getDevicesByGroup(grop);
@@ -1445,7 +1406,6 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
 
         unbindService(myServiceConenction);
         unregisterReceiver(mGattUpdateReceiver);
-//		unregisterReceiver(mGattUpdateReceiver);
         hashMapConnect = null;
         hashMapLock = null;
     }

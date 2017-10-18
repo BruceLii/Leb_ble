@@ -83,7 +83,7 @@ public class MusicLibActivity extends BaseProgressActivity {
 	
 	private void goBackWithData(Mp3Adapter mp3Adapter){
 		ArrayList<Mp3> mprMp3s = new ArrayList<Mp3>(mp3Adapter.getSelectSet());
-		LedBleApplication.getApp().setMp3s(mprMp3s);
+		LedBleApplication.getInstance().setMp3s(mprMp3s);
 		putDataBack(null);
 	}
 	
@@ -94,8 +94,8 @@ public class MusicLibActivity extends BaseProgressActivity {
 				mp3s.addAll(mp3list);
 			}
 			mp3Adapter = new Mp3Adapter(this, mp3s);
-			if (!ListUtiles.isEmpty(LedBleApplication.getApp().getMp3s())) {
-				HashSet<Mp3> set = new HashSet<Mp3>(LedBleApplication.getApp().getMp3s());
+			if (!ListUtiles.isEmpty(LedBleApplication.getInstance().getMp3s())) {
+				HashSet<Mp3> set = new HashSet<Mp3>(LedBleApplication.getInstance().getMp3s());
 				mp3Adapter.setSelectSet(set);
 			}
 			mp3Adapter.setOnSelectListener(new OnSelectListener() {

@@ -56,7 +56,6 @@ import com.ledble.base.LedBleApplication;
 import com.ledble.base.LedBleFragment;
 import com.ledble.bean.Mp3;
 import com.ledble.bean.MyColor;
-import com.ledble.constant.Constant;
 import com.ledble.view.VolumCircleBar;
 
 /**
@@ -454,7 +453,7 @@ public class MusicFragment extends LedBleFragment implements Runnable {
 					seekBar.setProgress(0);
 					return;
 				}
-				if (!ListUtiles.isEmpty(LedBleApplication.getApp().getMp3s())) {
+				if (!ListUtiles.isEmpty(LedBleApplication.getInstance().getMp3s())) {
 					System.out.println("progress-->" + seekBar.getProgress());
 					int duration = currentMp3.getDuration();
 					int current = (int) seekBar.getProgress() * duration / 100;
@@ -583,18 +582,18 @@ public class MusicFragment extends LedBleFragment implements Runnable {
 
 	public void palayNext() {
 		if (null == currentMp3) {
-			if (!ListUtiles.isEmpty(LedBleApplication.getApp().getMp3s())) {
+			if (!ListUtiles.isEmpty(LedBleApplication.getInstance().getMp3s())) {
 				startPlay(0);
 			} else {
 				Tool.ToastShow(mActivity, R.string.chose_list);
 			}
 		} else {
-			if (!ListUtiles.isEmpty(LedBleApplication.getApp().getMp3s())) {
+			if (!ListUtiles.isEmpty(LedBleApplication.getInstance().getMp3s())) {
 				int currentIndex = findCurrentIndex(currentMp3);
 				if (currentIndex != -1) {
-					if (currentIndex < (LedBleApplication.getApp().getMp3s().size() - 1)) {
+					if (currentIndex < (LedBleApplication.getInstance().getMp3s().size() - 1)) {
 						startPlay(++currentIndex);
-					} else if (currentIndex == (LedBleApplication.getApp().getMp3s().size() - 1)) {
+					} else if (currentIndex == (LedBleApplication.getInstance().getMp3s().size() - 1)) {
 						startPlay(0);
 					}
 				} else {
@@ -608,19 +607,19 @@ public class MusicFragment extends LedBleFragment implements Runnable {
 
 	public void playPre() {
 		if (null == currentMp3) {
-			if (!ListUtiles.isEmpty(LedBleApplication.getApp().getMp3s())) {
+			if (!ListUtiles.isEmpty(LedBleApplication.getInstance().getMp3s())) {
 				startPlay(0);
 			} else {
 				Tool.ToastShow(mActivity, R.string.chose_list);
 			}
 		} else {
-			if (!ListUtiles.isEmpty(LedBleApplication.getApp().getMp3s())) {
+			if (!ListUtiles.isEmpty(LedBleApplication.getInstance().getMp3s())) {
 				int currentIndex = findCurrentIndex(currentMp3);
 				if (currentIndex != -1) {
 					if (currentIndex > 0) {
 						startPlay(--currentIndex);
 					} else if (currentIndex == 0) {
-						startPlay(LedBleApplication.getApp().getMp3s().size() - 1);
+						startPlay(LedBleApplication.getInstance().getMp3s().size() - 1);
 					}
 				} else {
 					startPlay(0);
@@ -686,7 +685,7 @@ public class MusicFragment extends LedBleFragment implements Runnable {
 
 	public void playPause() {
 
-		if (ListUtiles.isEmpty(LedBleApplication.getApp().getMp3s())) {
+		if (ListUtiles.isEmpty(LedBleApplication.getInstance().getMp3s())) {
 			Tool.ToastShow(mActivity, R.string.chose_list);
 			return;
 		}
@@ -707,7 +706,7 @@ public class MusicFragment extends LedBleFragment implements Runnable {
 					resumeRotate();  // 继续旋转动画
 					isMusicStop = false;
 				} else {
-					if (!ListUtiles.isEmpty(LedBleApplication.getApp().getMp3s())) {
+					if (!ListUtiles.isEmpty(LedBleApplication.getInstance().getMp3s())) {
 						startPlay(0);
 					} else {
 						Tool.ToastShow(mActivity, R.string.chose_list);
@@ -750,7 +749,7 @@ public class MusicFragment extends LedBleFragment implements Runnable {
 						mVisualizer.setEnabled(false);
 					}
 					try {
-						ArrayList<Mp3> list = LedBleApplication.getApp().getMp3s();
+						ArrayList<Mp3> list = LedBleApplication.getInstance().getMp3s();
 						int index = findCurrentIndex(mp3);
 						
 						if (!isLoopOne && isRandom) { //单曲循环
@@ -1058,7 +1057,7 @@ public class MusicFragment extends LedBleFragment implements Runnable {
 	}
 
 	private int findCurrentIndex(Mp3 mp3) {
-		ArrayList<Mp3> list = LedBleApplication.getApp().getMp3s();
+		ArrayList<Mp3> list = LedBleApplication.getInstance().getMp3s();
 		if (ListUtiles.isEmpty(list)) {
 			return -1;
 		}
@@ -1082,10 +1081,10 @@ public class MusicFragment extends LedBleFragment implements Runnable {
 	}
 
 	private void startPlay(int index) {
-		if (!ListUtiles.isEmpty(LedBleApplication.getApp().getMp3s())
-				&& LedBleApplication.getApp().getMp3s().size() > index) {
+		if (!ListUtiles.isEmpty(LedBleApplication.getInstance().getMp3s())
+				&& LedBleApplication.getInstance().getMp3s().size() > index) {
 			try {
-				playMp3(LedBleApplication.getApp().getMp3s().get(index));
+				playMp3(LedBleApplication.getInstance().getMp3s().get(index));
 				imageViewPlay.setImageResource(R.drawable.bg_play_pause);
 				int musicTime = mediaPlayer.getDuration() / 1000;
 				String minute = "";

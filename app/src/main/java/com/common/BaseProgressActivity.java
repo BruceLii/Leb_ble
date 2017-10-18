@@ -20,7 +20,7 @@ public class BaseProgressActivity extends BaseActivity {
 		// @Override
 		// public void OnCrash(Throwable e) {
 		// Intent i = new Intent();
-		// i.setClass(App.getApp(), LoginActivity.class);
+		// i.setClass(App.getInstance(), LoginActivity.class);
 		// i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		// i.putExtra("flag", -1);
 		// startActivity(i);

@@ -206,7 +206,7 @@ public class BluetoothLeServiceSingle extends Service {
 	}
 
 	/**
-	 * After using a given BLE device, the app must call this method to ensure
+	 * After using a given BLE device, the instance must call this method to ensure
 	 * resources are released properly.
 	 */
 	public void close() {
