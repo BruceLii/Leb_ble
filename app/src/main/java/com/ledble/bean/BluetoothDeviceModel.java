@@ -9,4 +9,12 @@ import android.bluetooth.BluetoothDevice;
 public class BluetoothDeviceModel {
     public BluetoothDevice device;
     public boolean isConnected = false;//default value is false .
+
+    @Override
+    public String toString() {
+        return "BluetoothDeviceModel{" +
+                "device=" + device.getAddress() +
+                ", isConnected=" + isConnected +
+                '}';
+    }
 }

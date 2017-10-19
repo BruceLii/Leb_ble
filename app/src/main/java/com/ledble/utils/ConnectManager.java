@@ -18,7 +18,10 @@ public class ConnectManager {
     /**
      * 扫描到的指定蓝牙设备
      */
-    public List<BluetoothDeviceModel> scanedDevice = Collections.synchronizedList(new ArrayList<BluetoothDeviceModel>());
+    private static List<BluetoothDeviceModel> scanedDevice = Collections.synchronizedList(new ArrayList<BluetoothDeviceModel>());
+
+    private ConnectManager() {
+    }
 
     public static ConnectManager getInstance() {
         if (connectManager == null) {
@@ -27,7 +30,44 @@ public class ConnectManager {
         return connectManager;
     }
 
-    private ConnectManager() {
+    public static List<BluetoothDeviceModel> getScanedDevice() {
+        return scanedDevice;
+    }
+
+    public static void addDevice(BluetoothDeviceModel newFoundDevice) {
+        boolean isContain = false;
+        if (scanedDevice.size() == 0) {
+            isContain = false;
+        }
+
+        for (BluetoothDeviceModel m :
+                scanedDevice) {
+            if (m.device.getAddress().equals(newFoundDevice.device.getAddress())) {
+                isContain = true;
+                break;
+            }
+        }
+        if (!isContain) {
+            scanedDevice.add(newFoundDevice);
+        }
+
+    }
+
+    /**
+     * 获取已连的蓝牙设备数量
+     *
+     * @return
+     */
+    public static int getConnectedCount() {
+        int count = 0;
+        for (BluetoothDeviceModel m :
+                scanedDevice) {
+            if (m.isConnected) {
+                count++;
+            }
+        }
+
+        return count;
     }
 
     public void clear() {
@@ -42,23 +82,6 @@ public class ConnectManager {
             }
         }
 
-    }
-
-    /**
-     * 获取已连的蓝牙设备数量
-     *
-     * @return
-     */
-    public int getConnectedCount() {
-        int count = 0;
-        for (BluetoothDeviceModel m :
-                scanedDevice) {
-            if (m.isConnected) {
-                count++;
-            }
-        }
-
-        return count;
     }
 
     /**

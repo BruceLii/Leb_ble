@@ -46,7 +46,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
-import android.text.style.LeadingMarginSpan;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -87,6 +86,7 @@ import com.ledble.net.NetExceptionInterface;
 import com.ledble.service.BluetoothLeServiceSingle;
 import com.ledble.service.MyServiceConenction;
 import com.ledble.service.MyServiceConenction.ServiceConnectListener;
+import com.ledble.utils.ConnectManager;
 import com.ledble.utils.ManageFragment;
 import com.ledble.view.ActionSheet;
 import com.ledble.view.ActionSheet.ActionSheetListener;
@@ -104,6 +104,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.Bind;
 
@@ -112,9 +114,8 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
     private static final int CHOOSE_PICTURE = 1;
     private static final long SCAN_PERIOD = 3000;
     private static final int REQUEST_ENABLE_BT = 1;
-    private final int MSG_START_CONNECT = 10000;// 开始连接
-
     private static Bitmap bm;
+    private final int MSG_START_CONNECT = 10000;// 开始连接
     public boolean isLightOpen = true;
     public int speed = 1;
     public int brightness = 1;
@@ -225,7 +226,7 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
 
                                 BluetoothDeviceModel deviceModel = new BluetoothDeviceModel();
                                 deviceModel.device = device;
-                                LedBleApplication.getInstance().connectManager.scanedDevice.add(deviceModel);
+                                LedBleApplication.getInstance().connectManager.addDevice(deviceModel);
 
                                 LedBleApplication.getInstance().getBleDevices().add(device);
                                 LogUtil.i(LedBleApplication.tag, "发现新设备：" + device.getAddress() + " total:" + LedBleApplication.getInstance().getBleDevices().size());
@@ -241,6 +242,8 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
             });
         }
     };
+
+    private Timer timer = new Timer();
     /**
      * 广播监听回调
      */
@@ -252,19 +255,17 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
             String address = intent.getStringExtra("address");
             if (BluetoothLeServiceSingle.ACTION_GATT_CONNECTED.equals(action)) {// 连接到设备
                 hashMapConnect.put(address, true);
-                updateDevieConnect();
                 LogUtil.i(LedBleApplication.tag, "connect:" + address);
                 mBluetoothAdapter.stopLeScan(mLeScanCallback);
-                LedBleApplication.connectManager.updateConnectState(address,true);
+                LedBleApplication.connectManager.updateConnectState(address, true);
 
             } else if (BluetoothLeServiceSingle.ACTION_GATT_DISCONNECTED.equals(action)) {// 设断开备
                 hashMapConnect.remove(address);
                 LedBleApplication.getInstance().removeDisconnectDevice(address);// 删除断开的device
                 LedBleApplication.getInstance().getBleGattMap().remove(address);// 删除断开的blgatt
                 hashMapLock.remove(address);// 删除锁
-                updateDevieConnect();
                 LogUtil.i(LedBleApplication.tag, "disconnect:" + address + " connected devices:" + LedBleApplication.getInstance().getBleDevices().size());
-
+                LedBleApplication.connectManager.updateConnectState(address, false);
                 mBluetoothAdapter.startLeScan(mLeScanCallback);
 
             } else if (BluetoothLeServiceSingle.ACTION_GATT_SERVICES_DISCOVERED.equals(action)) {// 发现service,就可以获取Characteristic
@@ -276,6 +277,8 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
             } else if (BluetoothLeServiceSingle.ACTION_DATA_AVAILABLE.equals(action)) {// 读取到数据，不做处理，本应用不需要读取数据
 
             }
+
+            updateDevieConnect();
         }
     };
 
@@ -964,7 +967,11 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
 //        if (groupName.equalsIgnoreCase("")) {
 //            textViewConnectCount.setText(Integer.toString(hashMapConnect.size()));
 //        }
-        textViewConnectCount.setText(Integer.toString(hashMapConnect.size()));
+        textViewConnectCount.setText(Integer.toString(ConnectManager.getConnectedCount()));
+        for (BluetoothDeviceModel m :
+                ConnectManager.getScanedDevice()) {
+            Log.i("Devices", m.toString());
+        }
     }
 
     /**
@@ -1408,6 +1415,8 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
         unregisterReceiver(mGattUpdateReceiver);
         hashMapConnect = null;
         hashMapLock = null;
+        timer.cancel();
+        timer=null;
     }
 
     @Override
@@ -1426,11 +1435,16 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
     @Override
     protected void onResume() {
         super.onResume();
-//		MobclickAgent.onResume(MainActivity.this);
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
         mBluetoothAdapter.startLeScan(mLeScanCallback);
-//		Toast.makeText(MainActivity.this, "从后台切换回前台", Toast.LENGTH_SHORT).show();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                mBluetoothAdapter.startLeScan(mLeScanCallback);
+            }
+        }, 1000, 3000/* 表示1000毫秒之後，每隔1000毫秒執行一次 */);
     }
+
 
     public SegmentedRadioGroup getSegmentDm() {
         return segmentDm;
