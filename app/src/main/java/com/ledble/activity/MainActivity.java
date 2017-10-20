@@ -46,6 +46,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -215,28 +216,31 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    if (device != null) {
-                        if (!LedBleApplication.getInstance().getBleDevices().contains(device) && device.getName() != null) {
-                            String name = device.getName();
+                    if (device == null) return;
+                    String name = device.getName();
 
-                            if (name.startsWith(BluetoothLeServiceSingle.NAME_START_ELK)
-                                    || name.startsWith(BluetoothLeServiceSingle.NAME_START_LED)
-                                    || name.startsWith(BluetoothLeServiceSingle.NAME_START_TV)
-                                    || name.startsWith(BluetoothLeServiceSingle.NAME_START_HEI)) {
+                    if (TextUtils.isEmpty(name)) return;
 
-                                BluetoothDeviceModel deviceModel = new BluetoothDeviceModel();
-                                deviceModel.device = device;
-                                LedBleApplication.getInstance().connectManager.addDevice(deviceModel);
+                    if (name.startsWith(BluetoothLeServiceSingle.NAME_START_ELK)
+                            || name.startsWith(BluetoothLeServiceSingle.NAME_START_LED)
+                            || name.startsWith(BluetoothLeServiceSingle.NAME_START_TV)
+                            || name.startsWith(BluetoothLeServiceSingle.NAME_START_HEI)) {
 
-                                LedBleApplication.getInstance().getBleDevices().add(device);
-                                LogUtil.i(LedBleApplication.tag, "发现新设备：" + device.getAddress() + " total:" + LedBleApplication.getInstance().getBleDevices().size());
-//                                conectHandler.sendEmptyMessage(MSG_START_CONNECT);// 可以开始连接设备了 发现单个设备
-                                Message m = Message.obtain();
-                                m.what = MSG_START_CONNECT;
-                                m.obj = device;
-                                conectHandler.sendMessage(m);
-                            }
+                        BluetoothDeviceModel deviceModel = new BluetoothDeviceModel();
+                        deviceModel.device = device;
+                        LedBleApplication.getInstance().connectManager.addDevice(deviceModel);
+
+                        if (LedBleApplication.connectManager.isDeviceConnected(device)) {//如果扫描的当前设备已连接，则不做处理
+                            return;
                         }
+
+                        LedBleApplication.getInstance().getBleDevices().add(device);
+                        LogUtil.i(LedBleApplication.tag, "发现新设备：" + device.getAddress() + " total:" + LedBleApplication.getInstance().getBleDevices().size());
+
+                        Message m = Message.obtain();
+                        m.what = MSG_START_CONNECT;
+                        m.obj = device;
+                        conectHandler.sendMessage(m);
                     }
                 }
             });
@@ -1416,7 +1420,7 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
         hashMapConnect = null;
         hashMapLock = null;
         timer.cancel();
-        timer=null;
+        timer = null;
     }
 
     @Override
@@ -1440,9 +1444,16 @@ public class MainActivity extends LedBleActivity implements NetExceptionInterfac
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                mBluetoothAdapter.startLeScan(mLeScanCallback);
+//                mBluetoothAdapter.startLeScan(mLeScanCallback);
+
+                //直接连接 未成功的设备。
+                for (BluetoothDevice m :
+                        LedBleApplication.connectManager.getUnconnectedDevice()) {
+                    startConnectDevices(m);
+                }
+
             }
-        }, 1000, 3000/* 表示1000毫秒之後，每隔1000毫秒執行一次 */);
+        }, 0, 5000/* 表示1000毫秒之後，每隔1000毫秒執行一次 */);
     }
 
 

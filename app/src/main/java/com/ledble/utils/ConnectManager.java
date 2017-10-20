@@ -70,6 +70,45 @@ public class ConnectManager {
         return count;
     }
 
+    /**
+     * 数据中心是否已经扫描到改蓝牙设备
+     *
+     * @param device
+     * @return
+     */
+    public boolean isContainTheDevice(BluetoothDevice device) {
+        boolean flag = false;
+
+        for (BluetoothDeviceModel m :
+                scanedDevice) {
+            if (m.device.getAddress().equals(device.getAddress())) {
+                flag = true;
+                break;
+            }
+        }
+
+        return flag;
+    }
+
+    /**
+     * 指定设备是否当前已连接，
+     *
+     * @param device
+     * @return
+     */
+    public boolean isDeviceConnected(BluetoothDevice device) {
+        boolean flag = false;
+
+        for (BluetoothDeviceModel m :
+                scanedDevice) {
+            if (m.device.getAddress().equals(device.getAddress())) {
+                flag = m.isConnected;
+                break;
+            }
+        }
+        return flag;
+    }
+
     public void clear() {
         scanedDevice.clear();
     }
